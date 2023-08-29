@@ -7,3 +7,4 @@ import Container from '@/components/shared/Container.vue'
     <h1 class="uppercase text-xl font-bold text-center">TODO</h1>
   </Container>
 </template>
+
