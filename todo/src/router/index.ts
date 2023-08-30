@@ -19,9 +19,26 @@ const router = createRouter({
          component: () => import('../views/SingUpView.vue')
       },
       {
-         path: '/todos',
-         name: 'todos',
-         component: () => import('../views/TodosView.vue')
+         path: '/personal',
+         name: 'personal',
+         component: () => import('../views/PersonalView.vue'),
+         children: [
+            {
+               path: 'todos',
+               name: 'todos',
+               component: () => import('./../views/lists/TodosListView.vue')
+            },
+            {
+               path: 'notes',
+               name: 'notes',
+               component: () => import('./../views/lists/NotesListView.vue')
+            }
+         ]
+      },
+      {
+         path: '/:pathMatch(.*)*',
+         name: 'not-found',
+         component: () => import('../views/NotFoundView.vue')
       }
    ]
 })

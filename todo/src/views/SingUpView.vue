@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import Container from '@/components/shared/Container.vue'
+import Container from '@/components/shared/ContainerShared.vue'
 import SignUpForm from '@/components/views/signup/SignUpForm.vue'
 </script>
 

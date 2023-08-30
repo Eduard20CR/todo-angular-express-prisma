@@ -4,16 +4,10 @@ import { toTypedSchema } from '@vee-validate/zod'
 import { z } from 'zod'
 
 const schema = toTypedSchema(
-   z
-      .object({
-         email: z.string().nonempty().email(),
-         password: z.string().nonempty().min(6),
-         confirmPassword: z.string().nonempty().min(6)
-      })
-      .refine((data) => data.password === data.confirmPassword, {
-         message: "Passwords don't match",
-         path: ['confirmPassword']
-      })
+   z.object({
+      email: z.string().nonempty().email(),
+      password: z.string().nonempty().min(6)
+   })
 )
 const { handleSubmit, errors } = useForm({
    validationSchema: schema
@@ -21,7 +15,6 @@ const { handleSubmit, errors } = useForm({
 
 const { value: email } = useField('email')
 const { value: password } = useField('password')
-const { value: confirmPassword } = useField('confirmPassword')
 
 const onSubmit = handleSubmit((values) => {
    console.log(values)
@@ -50,17 +43,8 @@ const onSubmit = handleSubmit((values) => {
          />
          <span>{{ errors.password }}</span>
       </div>
-      <div class="grid">
-         <label for="password">Confirm Password</label>
-         <input
-            class="bg-transparent border-b-2 border-primary"
-            name="confirmPassword"
-            v-model="confirmPassword"
-            type="password"
-         />
-         <span>{{ errors.confirmPassword }}</span>
-      </div>
-      <div>
+
+      <div class="mt-5">
          <button class="rounded px-4 py-2 border border-primary" type="submit">Enter</button>
       </div>
    </form>

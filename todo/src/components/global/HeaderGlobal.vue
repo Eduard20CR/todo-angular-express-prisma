@@ -1,11 +1,5 @@
 <script setup lang="ts">
-import { useRoute, useRouter } from 'vue-router'
-import Container from './../shared/Container.vue'
-
-const router = useRouter()
-const route = useRoute()
-
-router.afterEach((to, from) => {})
+import Container from './../shared/ContainerShared.vue'
 </script>
 
 <template>
