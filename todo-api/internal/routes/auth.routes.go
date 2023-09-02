@@ -6,12 +6,11 @@ import (
 	"github.com/go-chi/chi/v5"
 )
 
-func UserRoutes() *chi.Mux {
+func AuthRoutes() *chi.Mux {
 	r := chi.NewRouter()
 
-	r.Get("/", controllers.GetUsers)
-	r.Get("/{id}", controllers.GetUserById)
-	r.Patch("/{id}", controllers.UpdateUser)
+	r.Post("/sign-up", controllers.SignUser)
+	r.Post("/login", controllers.LoginUser)
 
 	return r
 }

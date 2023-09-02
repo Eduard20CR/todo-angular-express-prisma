@@ -9,12 +9,16 @@ import (
 )
 
 func main() {
+	port := ":3000"
 
 	db.DbConnection()
 
-	fmt.Println(db.GetDB())
-
+	fmt.Println("Server running on port", port)
 	r := routers.NewTodoRouter()
+	err := http.ListenAndServe(port, r)
+	if err != nil {
+		fmt.Println(err.Error())
+		panic(0)
+	}
 
-	http.ListenAndServe(":3000", r)
 }

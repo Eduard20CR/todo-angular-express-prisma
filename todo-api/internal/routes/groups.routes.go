@@ -10,9 +10,9 @@ func GroupsRoutes() *chi.Mux {
 	r := chi.NewRouter()
 
 	r.Get("/", controllers.GetGroups)
-	r.Get("/:id", controllers.GetGroupById)
+	r.Get("/{id}", controllers.GetGroupById)
 	r.Post("/", controllers.CreateGroup)
-	r.Patch("/:id", controllers.UpdateGroup)
+	r.Patch("/{id}", controllers.UpdateGroup)
 
 	return r
 }
