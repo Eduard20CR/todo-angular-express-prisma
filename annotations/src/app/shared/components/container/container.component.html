@@ -1,0 +1,35 @@
+<div class="flex justify-center">
+  <div
+    class="w-full px"
+    [ngClass]="{
+      'max-w-xs': maxWidth == 'xs',
+      'max-w-md': maxWidth == 'md',
+      'max-w-lg': maxWidth == 'lg',
+      'max-w-xl': maxWidth == 'xl',
+      'max-w-2xl': maxWidth == '2xl',
+      'max-w-3xl': maxWidth == '3xl',
+      'max-w-4xl': maxWidth == '4xl',
+      'max-w-5xl': maxWidth == '5xl',
+      'max-w-6xl': maxWidth == '6xl',
+      'max-w-7xl': maxWidth == '7xl',
+      'max-w-full': maxWidth == 'full',
+      'px-0': paddingX == '0',
+      'px-1': paddingX == '1',
+      'px-2': paddingX == '2',
+      'px-3': paddingX == '3',
+      'px-4': paddingX == '4',
+      'px-5': paddingX == '5',
+      'px-6': paddingX == '6',
+      'px-7': paddingX == '7',
+      'px-8': paddingX == '8',
+      'px-9': paddingX == '9',
+      'px-10': paddingX == '10',
+      'px-11': paddingX == '11',
+      'px-12': paddingX == '12',
+      'px-14': paddingX == '14',
+      'px-16': paddingX == '16'
+    }"
+  >
+    <ng-content></ng-content>
+  </div>
+</div>
