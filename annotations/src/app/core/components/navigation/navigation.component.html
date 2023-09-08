@@ -1,11 +1,36 @@
 <header>
   <div app-container>
     <nav>
-      <ul class="flex">
-        <li><a routerLink="/">Home</a></li>
-        <li><a routerLink="/">About</a></li>
-        <li><a routerLink="/">Login</a></li>
-        <li><a routerLink="/">Sign Up</a></li>
+      <ul class="flex gap-5">
+        <li class="py-2 cursor-pointer mr-auto">
+          <a routerLink="/">NOTTI</a>
+        </li>
+        <li class="py-2 cursor-pointer">
+          <a
+            routerLink="/"
+            routerLinkActive="border-b border-b-white"
+            [routerLinkActiveOptions]="{ exact: true }"
+            >Home</a
+          >
+        </li>
+        <li class="py-2">
+          <ul>
+            <li class="cursor-pointer">
+              <a
+                routerLink="/sign-up"
+                routerLinkActive="border-b border-b-white"
+                >Sign-Up</a
+              >
+            </li>
+            <li class="cursor-pointer">
+              <a
+                routerLink="/sign-in"
+                routerLinkActive="border-b border-b-white"
+                >Sign-In</a
+              >
+            </li>
+          </ul>
+        </li>
       </ul>
     </nav>
   </div>

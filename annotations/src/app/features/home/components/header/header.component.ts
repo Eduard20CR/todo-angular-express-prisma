@@ -3,10 +3,10 @@ import { CommonModule } from '@angular/common';
 import { ContainerComponent } from 'src/app/shared/components/container/container.component';
 
 @Component({
-  selector: 'app-home',
+  selector: '[app-header]',
   standalone: true,
   imports: [CommonModule, ContainerComponent],
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss'],
+  templateUrl: './header.component.html',
+  styleUrls: ['./header.component.scss'],
 })
-export class HomeComponent {}
+export class HeaderComponent {}
