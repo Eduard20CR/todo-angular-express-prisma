@@ -1,0 +1,30 @@
+.homeAnimation {
+  grid-template-columns: 1fr auto;
+
+  &__box {
+    left: 0;
+    top: 0;
+    animation-name: goal-animations;
+    animation-duration: 3s;
+    animation-fill-mode: both;
+    animation-timing-function: ease-in-out;
+  }
+
+  &__flagArrow {
+    width: 0;
+    height: 0;
+    border-top-color: transparent;
+    border-bottom-color: transparent;
+  }
+}
+
+@keyframes goal-animations {
+  0% {
+    left: 0;
+    transform: translate(0);
+  }
+  100% {
+    left: 100%;
+    transform: translate(-100%);
+  }
+}
