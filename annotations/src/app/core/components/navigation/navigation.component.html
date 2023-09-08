@@ -6,31 +6,25 @@
           <a class="py-3 inline-block cursor-pointer" routerLink="/">NOTTI</a>
         </li>
         <li>
-          <a
-            class="pt-3 mb-3 inline-block cursor-pointer"
-            routerLink="/"
-            routerLinkActive="border-b border-b-white"
-            [routerLinkActiveOptions]="{ exact: true }"
-            >Home</a
-          >
+          <a class="py-3 inline-block cursor-pointer" routerLink="/">
+            <span
+              routerLinkActive="border-b border-b-white"
+              [routerLinkActiveOptions]="{ exact: true }"
+              >Home</span
+            >
+          </a>
         </li>
         <li>
           <ul class="flex gap-5">
             <li>
-              <a
-                class="pt-3 mb-3 inline-block cursor-pointer"
-                routerLink="/sign-up"
-                routerLinkActive="border-b border-b-white"
-                >Sign-Up</a
-              >
+              <a class="py-3 inline-block cursor-pointer" routerLink="/sign-up">
+                <span routerLinkActive="border-b border-b-white">Sign-Up</span>
+              </a>
             </li>
             <li>
-              <a
-                class="pt-3 mb-3 inline-block cursor-pointer"
-                routerLink="/sign-in"
-                routerLinkActive="border-b border-b-white"
-                >Sign-In</a
-              >
+              <a class="py-3 inline-block cursor-pointer" routerLink="/sign-in">
+                <span routerLinkActive="border-b border-b-white">Sign-In</span>
+              </a>
             </li>
           </ul>
         </li>
