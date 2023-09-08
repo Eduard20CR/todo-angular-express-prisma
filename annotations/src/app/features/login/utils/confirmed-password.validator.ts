@@ -5,9 +5,8 @@ export function confirmPasswordValidator(): ValidatorFn {
     const password = control.get('password');
     const confirmPassword = control.get('confirmPassword');
 
-    console.log(password?.value, confirmPassword?.value);
-    return password === confirmPassword
+    return password?.value === confirmPassword?.value
       ? null
-      : { forbiddenName: { value: control.value } };
+      : { confirmPassword: { value: control.value } };
   };
 }
