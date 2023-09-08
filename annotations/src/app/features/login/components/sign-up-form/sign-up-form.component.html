@@ -1,12 +1,13 @@
 <section app-container>
   <h1 class="text-4xl uppercase font-bold">Sign Up</h1>
 
-  <form class="mt-4 grid gap-5" action="">
+  <form class="mt-4 grid gap-5" [formGroup]="form" (ngSubmit)="submit()">
     <div class="grid gap-4">
       <label for="email">Email</label>
       <input
         class="bg-transparent border-b border-white text-white py-3 px-3"
         type="email"
+        formControlName="email"
       />
     </div>
     <div class="grid gap-4">
@@ -14,6 +15,7 @@
       <input
         class="bg-transparent border-b border-white text-white py-3 px-3"
         type="password"
+        formControlName="password"
       />
     </div>
     <div class="grid gap-4">
@@ -21,6 +23,7 @@
       <input
         class="bg-transparent border-b border-white text-white py-3 px-3"
         type="password"
+        formControlName="confirmPassword"
       />
     </div>
 
