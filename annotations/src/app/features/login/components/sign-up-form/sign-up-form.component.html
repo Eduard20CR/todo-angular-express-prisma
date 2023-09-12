@@ -4,13 +4,12 @@
   <form class="mt-4 grid gap-5" [formGroup]="form" (ngSubmit)="submit()">
     <div class="grid gap-4">
       <label for="email">Email</label>
-      <input
-        class="bg-transparent border-b border-white text-white py-3 px-3"
-        type="email"
-        name="email"
-        id="email"
-        formControlName="email"
-      />
+      <input class="bg-transparent border-b border-white text-white py-3 px-3" type="email" name="email" id="email" formControlName="email" />
+      <!-- VALIDATIONS -->
+      <div *ngIf="form.get('email')?.invalid && (form.get('email')?.dirty || form.get('email')?.touched)" class="text-secondary">
+        <div *ngIf="form.get('email')?.errors?.['required']">Email is required.</div>
+        <div *ngIf="form.get('email')?.errors?.['email']">Invalid email format</div>
+      </div>
     </div>
     <div class="grid gap-4">
       <label for="password">Password</label>
@@ -21,6 +20,13 @@
         id="password"
         formControlName="password"
       />
+      <!-- VALIDATIONS -->
+      <div *ngIf="form.get('password')?.invalid && (form.get('password')?.dirty || form.get('password')?.touched)" class="text-secondary">
+        <div *ngIf="form.get('password')?.errors?.['required']">Password is required.</div>
+        <div *ngIf="form.get('password')?.errors?.['minlength']">
+          Min length is {{form.get('password')?.errors?.['minlength']?.requiredLength??'6'}}.
+        </div>
+      </div>
     </div>
     <div class="grid gap-4">
       <label for="confirmpassword">Confirm Password</label>
@@ -31,15 +37,26 @@
         id="confirmpassword"
         formControlName="confirmPassword"
       />
+      <!-- VALIDATIONS -->
+      <div
+        *ngIf="form.get('confirmPassword')?.invalid && (form.get('confirmPassword')?.dirty || form.get('confirmPassword')?.touched)"
+        class="text-secondary"
+      >
+        <div *ngIf="form.get('confirmPassword')?.errors?.['required']">Confirmation password is required.</div>
+        <div *ngIf="form.get('confirmPassword')?.errors?.['minlength']">
+          Min length is {{form.get('confirmPassword')?.errors?.['minlength']?.requiredLength??'6'}}.
+        </div>
+      </div>
+      <div
+        *ngIf="form.get('confirmPassword')?.invalid && (form.get('confirmPassword')?.dirty || form.get('confirmPassword')?.touched)"
+        class="text-secondary"
+      >
+        <div *ngIf="form?.errors?.['confirmPassword']">Confirmation password does not match.</div>
+      </div>
     </div>
 
     <div>
-      <button
-        type="submit"
-        class="inline-block mt-4 px-4 py-2 uppercase font-bold border rounded"
-      >
-        Create Account
-      </button>
+      <button type="submit" class="inline-block mt-4 px-4 py-2 uppercase font-bold border rounded">Create Account</button>
     </div>
   </form>
 </section>
