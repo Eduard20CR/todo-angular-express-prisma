@@ -2,12 +2,8 @@ import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ContainerComponent } from 'src/app/shared/components/container/container.component';
 import { LoginService } from '../../services/login.service';
-import {
-  FormGroup,
-  FormControl,
-  Validators,
-  ReactiveFormsModule,
-} from '@angular/forms';
+import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
+import { FormsHelpersService } from 'src/app/core/services/forms-helpers.service';
 
 @Component({
   selector: '[app-sign-in-form]',
@@ -18,13 +14,11 @@ import {
 })
 export class SignInFormComponent {
   loginService = inject(LoginService);
+  fh = inject(FormsHelpersService);
 
   form = new FormGroup({
     email: new FormControl(null, [Validators.required, Validators.email]),
-    password: new FormControl(null, [
-      Validators.required,
-      Validators.minLength(8),
-    ]),
+    password: new FormControl(null, [Validators.required, Validators.minLength(6)]),
   });
 
   submit() {

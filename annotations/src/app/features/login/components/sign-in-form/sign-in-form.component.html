@@ -4,29 +4,27 @@
   <form class="mt-4 grid gap-5" [formGroup]="form" (ngSubmit)="submit()">
     <div class="grid gap-4">
       <label for="email">Email</label>
-      <input
-        class="bg-transparent border-b border-white text-white py-3 px-3"
-        type="email"
-        name="email"
-        id="email"
-        formControlName="email"
-      />
+      <input class="bg-transparent border-b border-white text-white py-3 px-3" type="email" name="email" id="email" formControlName="email" />
+      <div *ngIf="fh.isInputInvalid(form, 'email')" class="text-secondary">
+        <div *ngIf="fh.hasError(form, 'email', 'required')">Email is required.</div>
+        <div *ngIf="fh.hasError(form, 'email', 'email')">Invalid email format</div>
+      </div>
     </div>
     <div class="grid gap-4">
       <label for="password">Password</label>
-      <input
-        class="bg-transparent border-b border-white text-white py-3 px-3"
-        type="password"
-        name="password"
-        id="password"
-        formControlName="password"
-      />
+      <input class="bg-transparent border-b border-white text-white py-3 px-3" type="password" name="password" id="password" formControlName="password" />
+      <div *ngIf="fh.isInputInvalid(form, 'password')" class="text-secondary">
+        <div *ngIf="fh.hasError(form, 'password', 'required')">Password is required.</div>
+        <div *ngIf="fh.hasError(form, 'password', 'minlength')">Min length is {{form.get('password')?.errors?.['minlength']?.requiredLength??'6'}}.</div>
+      </div>
     </div>
-
     <div>
       <button
         type="submit"
         class="inline-block mt-4 px-4 py-2 uppercase font-bold border rounded"
+        [ngClass]="{
+        'text-gray-400 border-gray-500': form.invalid,
+      }"
       >
         Get In
       </button>

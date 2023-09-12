@@ -4,6 +4,7 @@ import { ContainerComponent } from 'src/app/shared/components/container/containe
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { LoginService } from '../../services/login.service';
 import { confirmPasswordValidator } from '../../utils/confirmed-password.validator';
+import { FormsHelpersService } from 'src/app/core/services/forms-helpers.service';
 
 @Component({
   selector: '[app-sign-up-form]',
@@ -14,6 +15,7 @@ import { confirmPasswordValidator } from '../../utils/confirmed-password.validat
 })
 export class SignUpFormComponent {
   loginService = inject(LoginService);
+  fh = inject(FormsHelpersService);
 
   form = new FormGroup(
     {

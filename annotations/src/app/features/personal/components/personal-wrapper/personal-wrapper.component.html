@@ -1,0 +1,14 @@
+<section app-container [maxWidth]="'full'">
+  <div class="personalWrapper grid gap-5">
+    <div class="border-r pt-10 pb-10 pr-5">
+      <div app-group-list></div>
+    </div>
+    <div class="pt-10 pb-10">
+      <div>
+        <button>TODOS</button>
+        <button>NOTES</button>
+      </div>
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</section>

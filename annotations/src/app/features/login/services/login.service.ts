@@ -7,4 +7,6 @@ export class LoginService {
   constructor() {}
 
   signUp(value: any) {}
+
+  signIn() {}
 }

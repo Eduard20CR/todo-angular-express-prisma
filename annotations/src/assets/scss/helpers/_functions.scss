@@ -1,0 +1,27 @@
+@use "sass:math";
+
+@function toVW($inPX: null, $screen: 1080) {
+  $inVW: math.div($inPX, $screen) * 100;
+  $val: #{$inVW}vw;
+  @return $val;
+}
+
+@function toVH($inPX: null, $screen: 1920) {
+  $inVW: math.div($inPX, $screen) * 100;
+  $val: #{$inVW}vh;
+  @return $val;
+}
+
+// Convert Pixels to REM using a based of 16px default
+// to use another base just replace the base. Example toREM(30,18)
+@function toREM($inPX: null, $fontbase: 16) {
+  $inVW: math.div($inPX, $fontbase);
+  $val: #{$inVW}rem;
+  @return $val;
+}
+
+@function toREMMobile($inPX: null, $fontbase: 16) {
+  $inVW: math.div($inPX, $fontbase);
+  $val: #{$inVW}rem;
+  @return $val;
+}
