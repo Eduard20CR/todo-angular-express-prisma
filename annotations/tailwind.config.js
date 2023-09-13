@@ -8,6 +8,7 @@ module.exports = {
         secondary: "#FFD400",
         tertiary: "#E84855",
         black: "#010001",
+        gray: "#71717a",
         white: "#E6EFE9",
       },
     },

@@ -1,0 +1,38 @@
+<article
+  class="border border-white shadow shadow-secondary p-5 rounded flex hover:shadow-md hover:shadow-secondary hover:-translate-y-1 flex-col transition-all w-full"
+>
+  <div *ngIf="!editMode" class="mb-5">
+    <h2 class="text-xl font-bold mb-3">{{ note.title }}</h2>
+    <p>{{ note.description }}</p>
+  </div>
+  <form *ngIf="editMode" [formGroup]="form" class="mb-5 grid gap-5" (ngSubmit)="submitEdit()">
+    <input class="bg-transparent border-b border-white text-white py-3 px-3" type="text" name="title" id="title" formControlName="title" />
+    <textarea
+      class="bg-transparent border-b border-white text-white py-3 px-3"
+      name="description"
+      id="description"
+      rows="10"
+      formControlName="description"
+    ></textarea>
+  </form>
+  <div class="mt-auto flex gap-2">
+    <button class="inline-flex text-gray hover:bg-tertiary hover:text-white rounded p-1 transition-colors" (click)="deleteTodo()" title="Delete">
+      <i class="inline-block w-6" app-trash-icon></i>
+    </button>
+    <button
+      class="ml-auto inline-flex text-gray hover:bg-secondary hover:text-black rounded p-1 transition-colors"
+      (click)="toggleEditMode()"
+      [title]="editMode ? 'Cancel' : 'Edit'"
+    >
+      <i class="inline-block w-6" app-edit-icon></i>
+    </button>
+    <button
+      *ngIf="editMode"
+      class="inline-flex text-gray hover:bg-primary hover:text-white rounded p-1 transition-colors"
+      (click)="submitEdit()"
+      title="Submit"
+    >
+      <i class="inline-block w-6" app-check-icon></i>
+    </button>
+  </div>
+</article>

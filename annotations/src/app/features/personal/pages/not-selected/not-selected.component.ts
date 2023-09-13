@@ -6,8 +6,7 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './not-selected.component.html',
-  styleUrls: ['./not-selected.component.scss']
+  styleUrls: ['./not-selected.component.scss'],
+  host: { class: 'flex w-full align-center justify-center items-center' },
 })
-export class NotSelectedComponent {
-
-}
+export class NotSelectedComponent {}

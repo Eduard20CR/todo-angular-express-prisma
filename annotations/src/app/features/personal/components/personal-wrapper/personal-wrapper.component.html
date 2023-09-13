@@ -1,13 +1,9 @@
-<section app-container [maxWidth]="'full'">
-  <div class="personalWrapper grid gap-5">
-    <div class="border-r pt-10 pb-10 pr-5">
+<section app-container [maxWidth]="'full'" [paddingX]="'10'">
+  <div class="personalWrapper grid gap-10">
+    <div class="border-r pt-10 pb-10 pr-10">
       <div app-group-list></div>
     </div>
-    <div class="pt-10 pb-10">
-      <div>
-        <button>TODOS</button>
-        <button>NOTES</button>
-      </div>
+    <div class="pt-10 pb-10 flex">
       <router-outlet></router-outlet>
     </div>
   </div>

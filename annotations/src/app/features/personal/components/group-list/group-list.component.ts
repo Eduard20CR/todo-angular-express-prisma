@@ -1,12 +1,14 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
   selector: '[app-group-list]',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, RouterLinkActive],
   templateUrl: './group-list.component.html',
   styleUrls: ['./group-list.component.scss'],
 })
-export class GroupListComponent {}
+export class GroupListComponent {
+  groups = ['', '', '', '', '', '', '', '', ''];
+}

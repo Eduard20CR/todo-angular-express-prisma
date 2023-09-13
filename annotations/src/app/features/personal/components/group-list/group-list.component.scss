@@ -1,0 +1,7 @@
+@import "./../../../../../assets/scss/custom";
+
+li {
+  &:not(:last-child) {
+    border-bottom-width: toREM(1);
+  }
+}

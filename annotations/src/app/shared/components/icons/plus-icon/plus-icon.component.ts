@@ -2,12 +2,10 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-note-list',
+  selector: '[app-plus-icon]',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './note-list.component.html',
-  styleUrls: ['./note-list.component.scss']
+  templateUrl: './plus-icon.component.html',
+  styleUrls: ['./plus-icon.component.scss'],
 })
-export class NoteListComponent {
-
-}
+export class PlusIconComponent {}

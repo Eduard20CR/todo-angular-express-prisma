@@ -7,15 +7,15 @@ export default [
     children: [
       {
         path: '',
-        loadComponent: () => import('./pages/personal/subroutes/not-selected/not-selected.component').then((m) => m.NotSelectedComponent),
+        loadComponent: () => import('./pages/not-selected/not-selected.component').then((m) => m.NotSelectedComponent),
       },
       {
-        path: 'notes',
-        loadComponent: () => import('./pages/personal/subroutes/note-list/note-list.component').then((m) => m.NoteListComponent),
+        path: 'notes/:id',
+        loadComponent: () => import('./pages/note-list/note-list.component').then((m) => m.NoteListComponent),
       },
       {
-        path: 'todos',
-        loadComponent: () => import('./pages/personal/subroutes/todo-list/todo-list.component').then((m) => m.TodoListComponent),
+        path: 'todos/:id',
+        loadComponent: () => import('./pages/todo-list/todo-list.component').then((m) => m.TodoListComponent),
       },
     ],
   },

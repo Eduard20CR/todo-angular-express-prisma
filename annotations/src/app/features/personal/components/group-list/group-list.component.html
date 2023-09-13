@@ -1,8 +1,8 @@
-<ul>
-  <li>
-    <a class="block py-4 border-b" routerLink="/personal">Hello</a>
-  </li>
-  <li>
-    <a class="block py-4" routerLink="/personal">Hello</a>
-  </li>
-</ul>
+<nav>
+  <ul>
+    <li *ngFor="let item of groups; let i = index" routerLinkActive="bg-primary">
+      <a class="font-bold block py-4 px-3 hover:bg-primary transition-colors" [routerLink]="['notes', i]">Hello</a>
+      <a class="hidden font-bold py-4 px-3 hover:bg-primary transition-colors" tabindex="-1" [routerLink]="['todos', i]">Hello</a>
+    </li>
+  </ul>
+</nav>
