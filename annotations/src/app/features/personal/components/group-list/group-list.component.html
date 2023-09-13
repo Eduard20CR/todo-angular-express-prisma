@@ -1,8 +1,11 @@
 <nav>
   <ul>
-    <li *ngFor="let item of groups; let i = index" routerLinkActive="bg-primary">
+    <li *ngFor="let item of groups; let i = index" class="cursor-pointer" routerLinkActive="bg-primary">
       <a class="font-bold block py-4 px-3 hover:bg-primary transition-colors" [routerLink]="['notes', i]">Hello</a>
       <a class="hidden font-bold py-4 px-3 hover:bg-primary transition-colors" tabindex="-1" [routerLink]="['todos', i]">Hello</a>
+    </li>
+    <li class="cursor-pointer">
+      <a class="font-bold block py-4 px-3 text-gray hover:bg-gray hover:text-white transition-colors">+ New Group</a>
     </li>
   </ul>
 </nav>
