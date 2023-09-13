@@ -1,0 +1,7 @@
+@import "./../../../../../assets/scss/custom";
+
+.todoListItem {
+  &:not(:last-child) {
+    border-bottom-width: toREM(1);
+  }
+}
