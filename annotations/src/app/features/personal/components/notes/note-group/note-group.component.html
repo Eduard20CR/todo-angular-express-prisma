@@ -1,0 +1,4 @@
+<div class="grid gap-10 flex-wrap grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3">
+  <app-add-note></app-add-note>
+  <app-note-item *ngFor="let note of notes" [note]="note"></app-note-item>
+</div>

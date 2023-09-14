@@ -11,4 +11,7 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 })
 export class GroupListComponent {
   groups = ['', '', '', '', '', '', '', '', ''];
+
+  mobileMenuOpen = true;
+  isMobile = true;
 }

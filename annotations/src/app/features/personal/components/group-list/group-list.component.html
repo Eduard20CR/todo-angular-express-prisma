@@ -1,4 +1,9 @@
-<nav>
+<nav
+  class="fixed w-screen -left-full top-0 -translate-x-10 sm:left-0 sm:translate-x-0 sm:relative sm:w-auto bg-black z-50"
+  [ngClass]="{
+  'left-0 translate-x-0': mobileMenuOpen && isMobile,
+}"
+>
   <ul>
     <li *ngFor="let item of groups; let i = index" class="cursor-pointer" routerLinkActive="bg-primary">
       <a class="font-bold block py-4 px-3 hover:bg-primary transition-colors" [routerLink]="['notes', i]">Hello</a>

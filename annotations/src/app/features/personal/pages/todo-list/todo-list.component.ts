@@ -2,8 +2,7 @@ import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NotesTodosSubmenuComponent } from 'src/app/features/personal/components/notes-todos-submenu/notes-todos-submenu.component';
 import { ActivatedRoute } from '@angular/router';
-import { TodoItemComponent } from '../../components/todo-item/todo-item.component';
-import { TodoGroupComponent } from '../../components/todo-group/todo-group.component';
+import { TodoGroupComponent } from '../../components/todos/todo-group/todo-group.component';
 
 @Component({
   selector: 'app-todo-list',
@@ -17,8 +16,6 @@ export class TodoListComponent implements OnInit {
   activatedRoute = inject(ActivatedRoute);
 
   ngOnInit(): void {
-    this.activatedRoute.params.subscribe((params) => {
-      console.log(params);
-    });
+    this.activatedRoute.params.subscribe((params) => {});
   }
 }

@@ -1,4 +1,4 @@
-@import "./../../../../../assets/scss/custom";
+@import "./../../../../../../assets/scss/custom";
 
 .todoListItem {
   &:not(:last-child) {
@@ -8,4 +8,8 @@
 
 ul.cdk-drop-list-dragging .todoListItem:not(.cdk-drag-placeholder) {
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.cdk-drag-preview {
+  border-width: 1px;
 }

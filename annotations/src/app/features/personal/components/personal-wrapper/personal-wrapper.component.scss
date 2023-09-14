@@ -1,5 +1,12 @@
 @import "./../../../../../assets/scss/custom";
 
 .personalWrapper {
-  grid-template-columns: toREM(400) 1fr;
+  transition: grid-template-columns 0.3s ease-in-out;
+  grid-template-columns: 1fr;
+  @media screen and (min-width: 640px) {
+    grid-template-columns: toREM(200) 1fr;
+  }
+  @media screen and (min-width: 768px) {
+    grid-template-columns: toREM(400) 1fr;
+  }
 }
