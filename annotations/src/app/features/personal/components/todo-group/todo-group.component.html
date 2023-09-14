@@ -1,5 +1,3 @@
-<div>
-  <ul class="grid border border-gray rounded">
-    <div app-todo-item class="todoListItem border-gray" *ngFor="let todo of todos"></div>
-  </ul>
-</div>
+<ul cdkDropList class="grid border border-gray rounded" (cdkDropListDropped)="drop($event)">
+  <li app-todo-item class="todoListItem border-gray" *ngFor="let todo of todos" cdkDrag [todo]="todo"></li>
+</ul>

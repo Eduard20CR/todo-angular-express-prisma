@@ -5,3 +5,7 @@
     border-bottom-width: toREM(1);
   }
 }
+
+ul.cdk-drop-list-dragging .todoListItem:not(.cdk-drag-placeholder) {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
