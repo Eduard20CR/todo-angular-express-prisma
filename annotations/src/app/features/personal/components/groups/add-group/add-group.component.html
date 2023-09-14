@@ -1,0 +1,13 @@
+<ng-container *ngIf="!addMode">
+  <button class="font-bold block w-full px-3 hover:bg-gray text-gray hover:text-white transition-colors" (click)="toggleAddMode()">+ New Group</button>
+</ng-container>
+<ng-container *ngIf="addMode">
+  <div class="flex gap-5 w-full items-center px-3">
+    <button class="min-w-[2.25rem] w-9 h-9 block p-1 hover:bg-tertiary hover:text-white rounded transition-colors" title="Cancel" (click)="toggleAddMode()">
+      <i class="rotate-45 inline-block" app-plus-icon></i>
+    </button>
+    <form class="w-full" [formGroup]="form" (ngSubmit)="submit()" (keydown.escape)="toggleAddMode()">
+      <input class="bg-transparent border-b border-white text-white py-1 px-3 w-full" type="text" #inputNewTodo formControlName="title" />
+    </form>
+  </div>
+</ng-container>

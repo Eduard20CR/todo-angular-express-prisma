@@ -1,0 +1,13 @@
+<nav
+  class="fixed w-full -left-full top-0 -translate-x-10 sm:left-0 sm:translate-x-0 sm:relative sm:w-auto bg-black z-50"
+  [ngClass]="{
+  'left-0 translate-x-0': mobileMenuOpen && isMobile,
+}"
+>
+  <ul>
+    <li app-add-group class="cursor-pointer"></li>
+    <li *ngFor="let group of groups | async" class="cursor-pointer" routerLinkActive="bg-primary">
+      <app-group-item [group]="group"></app-group-item>
+    </li>
+  </ul>
+</nav>

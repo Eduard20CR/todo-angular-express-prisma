@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ContainerComponent } from 'src/app/shared/components/container/container.component';
 import { RouterOutlet } from '@angular/router';
 import { TopBottonMarginComponent } from 'src/app/shared/components/top-botton-margin/top-botton-margin.component';
-import { GroupListComponent } from '../group-list/group-list.component';
+import { GroupListComponent } from '../groups/group-list/group-list.component';
 
 @Component({
   selector: '[app-personal-wrapper]',
