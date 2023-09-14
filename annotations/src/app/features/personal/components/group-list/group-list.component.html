@@ -9,8 +9,6 @@
       <a class="font-bold block py-4 px-3 hover:bg-primary transition-colors" [routerLink]="['notes', i]">Hello</a>
       <a class="hidden font-bold py-4 px-3 hover:bg-primary transition-colors" tabindex="-1" [routerLink]="['todos', i]">Hello</a>
     </li>
-    <li class="cursor-pointer">
-      <a class="font-bold block py-4 px-3 text-gray hover:bg-gray hover:text-white transition-colors">+ New Group</a>
-    </li>
+    <li app-add-group class="cursor-pointer"></li>
   </ul>
 </nav>
