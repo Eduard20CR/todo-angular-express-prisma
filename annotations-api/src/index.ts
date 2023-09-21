@@ -1,17 +1,20 @@
 import express from "express";
+import cors from "cors";
+
 import todosRouter from "./router/todos.router";
 import notesRouter from "./router/notes.router";
 import { errorHandlerMiddleware } from "./middlewares/errorHandling.middleware";
-import groupsRoutes from "./router/groups.router";
-import usersRoutes from "./router/users.router";
+import groupsRouter from "./router/groups.router";
+import authRouter from "./router/auth.router";
 
 // const prisma = new PrismaClient();
 const app = express();
 
 app.use(express.json());
+app.use(cors());
 
-app.use("/users", usersRoutes);
-app.use("/groups", groupsRoutes);
+app.use("/auth", authRouter);
+app.use("/groups", groupsRouter);
 app.use("/todos", todosRouter);
 app.use("/notes", notesRouter);
 

@@ -7,6 +7,9 @@ const prismaErrorHandling = (error: Prisma.PrismaClientKnownRequestError, req: R
     case "P2025":
       res.status(204).json({ errors: error.meta });
       break;
+    case "P2002":
+      res.status(400).json({ errors: error.meta });
+      break;
     default:
       res.status(500).json({ message: "Server Error" });
       break;
@@ -17,6 +20,7 @@ export const errorHandlerMiddleware = (error: Error, req: Request, res: Response
   if (error instanceof CustomError) {
     return res.status(error.code).json({ errors: [error.message] });
   }
+
   if (error instanceof Prisma.PrismaClientKnownRequestError) {
     return prismaErrorHandling(error, req, res, next);
   }

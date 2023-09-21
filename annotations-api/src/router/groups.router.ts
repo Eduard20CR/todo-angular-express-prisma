@@ -2,12 +2,12 @@ import { Router } from "express";
 import { createGroup, deleteGroup, getGroupById, getGroups, updateGroup } from "../controller/groups.controller";
 import { createGroupValidator, deleteGroupValidator, getGroupByIdValidator, updateGroupValidator } from "../validators/groups.validators";
 
-const groupsRoutes = Router();
+const groupsRouter = Router();
 
-groupsRoutes.get("/", getGroups);
-groupsRoutes.get("/:id", ...getGroupByIdValidator, getGroupById);
-groupsRoutes.post("/", ...createGroupValidator, createGroup);
-groupsRoutes.put("/:id", ...updateGroupValidator, updateGroup);
-groupsRoutes.delete("/:id", ...deleteGroupValidator, deleteGroup);
+groupsRouter.get("/", getGroups);
+groupsRouter.get("/:id", ...getGroupByIdValidator, getGroupById);
+groupsRouter.post("/", ...createGroupValidator, createGroup);
+groupsRouter.put("/:id", ...updateGroupValidator, updateGroup);
+groupsRouter.delete("/:id", ...deleteGroupValidator, deleteGroup);
 
-export default groupsRoutes;
+export default groupsRouter;
