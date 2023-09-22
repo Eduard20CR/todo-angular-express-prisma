@@ -30,6 +30,6 @@ app.use("/api/notes", passport.authenticate("jwt", { session: false }), notesRou
 app.use("/*", notFound);
 app.use(errorHandlerMiddleware);
 
-app.listen(3000, () => {
-  console.log("Server is running on http://localhost:3000");
+app.listen(Number(process.env.PORT!), () => {
+  console.log(`Server is running on http://localhost:${process.env.PORT!}`);
 });
