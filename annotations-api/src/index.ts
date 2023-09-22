@@ -19,8 +19,8 @@ app.use(cors());
 
 app.use("/auth", authRouter);
 app.use("/groups", passport.authenticate("jwt", { session: false }), groupsRouter);
-app.use("/todos", todosRouter);
-app.use("/notes", notesRouter);
+app.use("/todos", passport.authenticate("jwt", { session: false }), todosRouter);
+app.use("/notes", passport.authenticate("jwt", { session: false }), notesRouter);
 
 app.use(errorHandlerMiddleware);
 
