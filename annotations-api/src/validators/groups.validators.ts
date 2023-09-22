@@ -1,10 +1,13 @@
-import { body, param } from "express-validator";
+import { body, checkExact, param } from "express-validator";
 import { validateFunction } from "./validate.function";
 
-export const getGroupByIdValidator = [param("id").isInt().withMessage("Id must be an integer"), validateFunction];
+const idParam = param("id").isInt().withMessage("Id must be an integer");
+const nameBody = body("name").isString();
 
-export const createGroupValidator = [body("name").isString(), validateFunction];
+export const getGroupByIdValidator = [idParam, validateFunction];
 
-export const updateGroupValidator = [param("id").isInt().withMessage("Id must be an integer"), body("name").isString(), validateFunction];
+export const createGroupValidator = [nameBody, validateFunction];
 
-export const deleteGroupValidator = [param("id").isInt().withMessage("Id must be an integer"), validateFunction];
+export const updateGroupValidator = [idParam, nameBody, validateFunction];
+
+export const deleteGroupValidator = [idParam, validateFunction];

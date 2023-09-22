@@ -10,20 +10,17 @@ const initPassportJwt = (passport: PassportStatic) => {
   };
   passport.use(
     new JwtStrategy(opts, async (jwt_payload, done) => {
-      console.log(jwt_payload);
-
       try {
         const user = await prisma.user.findUnique({ where: { email: jwt_payload.email } });
 
         if (user) {
-          return done(null, user);
+          const { password, ...userNew } = user;
+          return done(null, userNew);
         } else {
           return done(null, false);
         }
       } catch (error) {
-        if (error) {
-          return done(error, false);
-        }
+        return done(error, false);
       }
     })
   );

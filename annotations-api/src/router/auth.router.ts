@@ -4,7 +4,7 @@ import { signInUserValidator, signUpUserValidator } from "../validators/auth.val
 
 const authRouter = Router();
 
-authRouter.get("/sign-up", signUpUserValidator, signUpUser);
-authRouter.get("/sign-in", signInUserValidator, signInUser);
+authRouter.get("/sign-up", ...signUpUserValidator, signUpUser);
+authRouter.get("/sign-in", ...signInUserValidator, signInUser);
 
 export default authRouter;
