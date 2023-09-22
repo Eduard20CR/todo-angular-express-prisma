@@ -8,8 +8,6 @@ export const getGroups: RequestHandler = async (req, res, next) => {
     const user = req.user as User;
     const groups = await prisma.group.findMany({ where: { userId: user.id } });
 
-    if (groups.length === 0) return res.status(404).json({ message: "Groups not found" });
-
     return res.json({ data: groups });
   } catch (error) {
     next(error);

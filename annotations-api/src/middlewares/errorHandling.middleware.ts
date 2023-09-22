@@ -16,7 +16,7 @@ const prismaErrorHandling = (error: Prisma.PrismaClientKnownRequestError, req: R
   }
 };
 
-export const errorHandlerMiddleware = (error: Error, req: Request, res: Response, next: NextFunction) => {
+const errorHandlerMiddleware = (error: Error, req: Request, res: Response, next: NextFunction) => {
   if (error instanceof CustomError) {
     return res.status(error.code).json({ errors: [error.message] });
   }
@@ -29,3 +29,5 @@ export const errorHandlerMiddleware = (error: Error, req: Request, res: Response
 
   res.status(500).json({ message: error?.message });
 };
+
+export default errorHandlerMiddleware;

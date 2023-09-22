@@ -7,5 +7,5 @@ export const validateFunction: RequestHandler = async (req, res, next) => {
     return next();
   }
 
-  res.send({ errors: result.array() });
+  res.status(404).send({ errors: result.array() });
 };
