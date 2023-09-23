@@ -1,9 +1,10 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ContainerComponent } from 'src/app/shared/components/container/container.component';
-import { LoginService } from '../../services/login.service';
 import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { FormsHelpersService } from 'src/app/core/services/forms-helpers.service';
+import { AuthService } from '../../services/auth.service';
+import { UserSignInDTO } from '../../models/login.models';
 
 @Component({
   selector: '[app-sign-in-form]',
@@ -13,17 +14,21 @@ import { FormsHelpersService } from 'src/app/core/services/forms-helpers.service
   styleUrls: ['./sign-in-form.component.scss'],
 })
 export class SignInFormComponent {
-  loginService = inject(LoginService);
+  authService = inject(AuthService);
   fh = inject(FormsHelpersService);
 
   form = new FormGroup({
-    email: new FormControl(null, [Validators.required, Validators.email]),
-    password: new FormControl(null, [Validators.required, Validators.minLength(6)]),
+    email: new FormControl('', [Validators.required, Validators.email]),
+    password: new FormControl('', [Validators.required, Validators.minLength(6)]),
   });
 
   submit() {
-    if (this.form.valid) {
-      this.loginService.signUp(this.form.value);
-    }
+    if (this.form.invalid) return this.form.markAllAsTouched();
+
+    const value: UserSignInDTO = {
+      ...(this.form.value as UserSignInDTO),
+    };
+
+    this.authService.signIn(value);
   }
 }

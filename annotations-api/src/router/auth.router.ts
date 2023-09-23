@@ -1,10 +1,11 @@
 import { Router } from "express";
-import { signInUser, signUpUser } from "../controller/auth.controller";
-import { signInUserValidator, signUpUserValidator } from "../validators/auth.validators";
+import { emailAlreadyRegistered, signInUser, signUpUser } from "../controller/auth.controller";
+import { emailAlreadyRegisteredValidator, signInUserValidator, signUpUserValidator } from "../validators/auth.validators";
 
 const authRouter = Router();
 
-authRouter.get("/sign-up", ...signUpUserValidator, signUpUser);
-authRouter.get("/sign-in", ...signInUserValidator, signInUser);
+authRouter.post("/sign-up", ...signUpUserValidator, signUpUser);
+authRouter.post("/sign-in", ...signInUserValidator, signInUser);
+authRouter.post("/email-already-registered", ...emailAlreadyRegisteredValidator, emailAlreadyRegistered);
 
 export default authRouter;

@@ -26,3 +26,5 @@ const confirmationPassword = body("confirmationPassword")
 export const signUpUserValidator = [email, password, confirmationPassword, validateFunction];
 
 export const signInUserValidator = [email, password, validateFunction];
+
+export const emailAlreadyRegisteredValidator = [email, validateFunction];

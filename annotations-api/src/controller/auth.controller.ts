@@ -6,6 +6,9 @@ import { sign } from "jsonwebtoken";
 
 export const signUpUser: RequestHandler = async (req, res, next) => {
   try {
+    const userAlreadyExist = await prisma.user.findUnique({ where: { email: req.body.email } });
+    if (userAlreadyExist) throw new CustomError("User already exist", 400);
+
     const { email, password } = req.body;
 
     const salt = await bcrypt.genSalt(10);
@@ -34,6 +37,16 @@ export const signInUser: RequestHandler = async (req, res, next) => {
     const jwt = sign({ id: user.id, email: user.email, role: user.roleId }, process.env.JWT_SECRET!, { expiresIn: "1h" });
 
     return res.json({ message: "User logged in", token: jwt });
+  } catch (error) {
+    next(error);
+  }
+};
+export const emailAlreadyRegistered: RequestHandler = async (req, res, next) => {
+  try {
+    let exists = { exists: false };
+    const userAlreadyExist = await prisma.user.findUnique({ where: { email: req.body.email } });
+    if (userAlreadyExist) exists = { exists: true };
+    res.status(200).json(exists);
   } catch (error) {
     next(error);
   }

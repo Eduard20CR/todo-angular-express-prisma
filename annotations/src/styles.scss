@@ -30,7 +30,7 @@ input[type="text"],
 input[type="email"],
 input[type="password"] {
   &.ng-touched.ng-invalid {
-    @apply border-b-secondary;
+    @apply border-b-tertiary;
   }
 }
 
@@ -38,5 +38,11 @@ input[type="password"] {
   @apply outline-1 outline-secondary;
 }
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
