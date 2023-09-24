@@ -8,3 +8,7 @@ export interface UserSignInDTO {
   email: string;
   password: string;
 }
+
+export interface emailAlreadyRegisteredValidator {
+  exists: boolean;
+}

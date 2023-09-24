@@ -1,7 +1,6 @@
 <section app-container>
   <h1 class="text-4xl uppercase font-bold">Sign Up</h1>
-
-  <form class="mt-4 grid gap-5" [formGroup]="form" (ngSubmit)="submit()">
+  <form class="mt-4 grid gap-5" [formGroup]="form" (ngSubmit)="submit()" *ngIf="!(loading$ | async); else loading">
     <div class="grid gap-4">
       <label for="email">Email</label>
       <input class="bg-transparent border-b border-white text-white py-3 px-3" type="email" name="email" id="email" formControlName="email" />
@@ -10,6 +9,7 @@
         <div *ngIf="fh.hasError(form, 'email', 'required')">Email is required.</div>
         <div *ngIf="fh.hasError(form, 'email', 'email')">Invalid email format</div>
         <div *ngIf="fh.hasError(form, 'email', 'emailAlreadyRegistered')">Email already in use</div>
+        <div *ngIf="fh.hasError(form, 'email', 'server')">Server error</div>
       </div>
     </div>
     <div class="grid gap-4">
@@ -45,6 +45,9 @@
       </div>
     </div>
 
+    <div *ngIf="apiErrors$ | async as errors">
+      <p class="text-tertiary" *ngFor="let error of errors">{{ error }}</p>
+    </div>
     <div>
       <button
         type="submit"
@@ -57,4 +60,12 @@
       </button>
     </div>
   </form>
+  <ng-template #loading>
+    <div class="flex justify-center my-5">
+      <mat-spinner class="fill-primary"></mat-spinner>
+    </div>
+  </ng-template>
+  <div class="mt-4">
+    <a class="text-gray" routerLink="/sign-in">Already have an account?</a>
+  </div>
 </section>

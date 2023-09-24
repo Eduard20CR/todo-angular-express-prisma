@@ -2,10 +2,14 @@
 
 ## FrontEnd
 
-### User
+### Auth
 
 [] Login
 [] Logout
+[] Change passwod
+
+### User
+
 [] Delete account
 [] Edit account
 [] Change passwod
@@ -28,8 +32,7 @@
 
 [] Add note
 [] Delete note
-[] Edit note name
-[] Edit note content
+[] Edit todo title
 
 ### Pages
 

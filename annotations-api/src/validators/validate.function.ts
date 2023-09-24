@@ -6,6 +6,7 @@ export const validateFunction: RequestHandler = async (req, res, next) => {
   if (result.isEmpty()) {
     return next();
   }
+  const messages = result.array().map((val) => val.msg);
 
-  res.status(404).send({ errors: result.array() });
+  return res.status(400).send({ errors: messages });
 };

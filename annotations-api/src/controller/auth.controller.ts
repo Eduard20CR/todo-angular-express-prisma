@@ -21,7 +21,6 @@ export const signUpUser: RequestHandler = async (req, res, next) => {
     next(error);
   }
 };
-
 export const signInUser: RequestHandler = async (req, res, next) => {
   try {
     const { email, password } = req.body;
@@ -44,7 +43,8 @@ export const signInUser: RequestHandler = async (req, res, next) => {
 export const emailAlreadyRegistered: RequestHandler = async (req, res, next) => {
   try {
     let exists = { exists: false };
-    const userAlreadyExist = await prisma.user.findUnique({ where: { email: req.body.email } });
+    const email = req.body.email;
+    const userAlreadyExist = await prisma.user.findUnique({ where: { email } });
     if (userAlreadyExist) exists = { exists: true };
     res.status(200).json(exists);
   } catch (error) {

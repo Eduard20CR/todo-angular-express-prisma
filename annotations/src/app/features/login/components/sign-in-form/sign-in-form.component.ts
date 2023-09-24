@@ -3,8 +3,8 @@ import { CommonModule } from '@angular/common';
 import { ContainerComponent } from 'src/app/shared/components/container/container.component';
 import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { FormsHelpersService } from 'src/app/core/services/forms-helpers.service';
-import { AuthService } from '../../services/auth.service';
 import { UserSignInDTO } from '../../models/login.models';
+import { SignInService } from '../../services/sign-in.service';
 
 @Component({
   selector: '[app-sign-in-form]',
@@ -14,8 +14,9 @@ import { UserSignInDTO } from '../../models/login.models';
   styleUrls: ['./sign-in-form.component.scss'],
 })
 export class SignInFormComponent {
-  authService = inject(AuthService);
   fh = inject(FormsHelpersService);
+
+  constructor(private signInService: SignInService) {}
 
   form = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
@@ -29,6 +30,6 @@ export class SignInFormComponent {
       ...(this.form.value as UserSignInDTO),
     };
 
-    this.authService.signIn(value);
+    this.signInService.signIn(value);
   }
 }

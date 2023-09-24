@@ -13,13 +13,19 @@ html {
     font-size: 16px;
   } */
   overflow-y: scroll;
+  height: 100%;
 }
 
 body {
   position: relative;
   @apply bg-black text-white;
+
+  // font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
+// -------------
+// FORMS
+// -------------
 input:-webkit-autofill,
 input:-webkit-autofill:focus {
   transition: background-color 0s 600000s, color 0s 600000s;
@@ -34,15 +40,17 @@ input[type="password"] {
   }
 }
 
+// -------------
+// GENERAL
+// -------------
+
 * {
   @apply outline-1 outline-secondary;
 }
 
-html,
-body {
-  height: 100%;
-}
-body {
-  margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
+// ANGULAR MATERIAL
+// -------------
+mat-progress-spinner circle,
+mat-spinner circle {
+  @apply stroke-secondary;
 }

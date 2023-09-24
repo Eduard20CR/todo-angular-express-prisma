@@ -10,6 +10,7 @@ import initPassportJwt from "./util/passport-jwt";
 import usersRouter from "./router/users.router";
 import errorHandlerMiddleware from "./middlewares/errorHandling.middleware";
 import notFound from "./router/not-found.router";
+import morgan from "morgan";
 
 const app = express();
 
@@ -17,6 +18,7 @@ initPassportJwt(passport);
 
 app.use(express.json());
 app.use(cors());
+app.use(morgan("dev"));
 
 app.use("/api/auth", authRouter);
 
