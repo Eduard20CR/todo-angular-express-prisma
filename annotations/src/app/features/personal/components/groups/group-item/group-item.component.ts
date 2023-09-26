@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-import { Group } from '../../../models/group.interface';
+import { Group } from '../../../models/group.model';
 
 @Component({
   selector: 'app-group-item',

@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NoteItemComponent } from '../note-item/note-item.component';
 import { AddNoteComponent } from '../add-note/add-note.component';
-import { Note } from '../../../models/note.interface';
+import { Note } from '../../../models/note.model';
 
 @Component({
   selector: 'app-note-group',

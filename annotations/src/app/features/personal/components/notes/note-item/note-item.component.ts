@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Note } from '../../../models/note.interface';
+import { Note } from '../../../models/note.model';
 import { EditIconComponent } from 'src/app/shared/components/icons/edit-icon/edit-icon.component';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CheckIconComponent } from 'src/app/shared/components/icons/check-icon/check-icon.component';

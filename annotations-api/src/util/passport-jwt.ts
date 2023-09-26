@@ -1,11 +1,20 @@
 import { ExtractJwt, Strategy as JwtStrategy, StrategyOptions } from "passport-jwt";
 import prisma from "../db/prisma";
 import { PassportStatic } from "passport";
+import dotenv from "dotenv";
+import { Request } from "express";
+dotenv.config();
+
+const cookieExtractor = (req: Request) => {
+  var token = null;
+  if (req && req.cookies) token = req.cookies["jwt"];
+  return token;
+};
 
 // IT REVICES THE PASSPORT INSTANCE AS PARAMETER SO THAT WE ARE EDITING THE SAME INSTANCE
 const initPassportJwt = (passport: PassportStatic) => {
   var opts: StrategyOptions = {
-    jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+    jwtFromRequest: cookieExtractor,
     secretOrKey: process.env.JWT_SECRET!,
   };
   passport.use(

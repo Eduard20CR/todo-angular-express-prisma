@@ -2,7 +2,7 @@ import { RequestHandler } from "express";
 import bcrypt from "bcrypt";
 import prisma from "../db/prisma";
 import { CustomError } from "../util/errorUtil";
-import { sign } from "jsonwebtoken";
+import { JwtPayload, sign, verify } from "jsonwebtoken";
 
 export const signUpUser: RequestHandler = async (req, res, next) => {
   try {
@@ -53,4 +53,15 @@ export const emailAlreadyRegistered: RequestHandler = async (req, res, next) => 
   } catch (error) {
     next(error);
   }
+};
+export const me: RequestHandler = async (req, res, next) => {
+  const response: { message: string; data: { validToken: boolean } } = { message: "Not authenticated", data: { validToken: false } };
+  if (!req.cookies["jwt"]) return res.status(401).json(response);
+
+  const user = await verify(req.cookies["jwt"], process.env.JWT_SECRET!);
+  if (user === undefined) return res.status(401).json(response);
+
+  response.data.validToken = true;
+  response.message = "Authenticated";
+  return res.status(200).json(response);
 };

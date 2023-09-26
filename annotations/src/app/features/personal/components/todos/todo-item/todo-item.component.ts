@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Todo } from '../../../models/todo.interface';
+import { Todo } from '../../../models/todo.model';
 
 @Component({
   selector: '[app-todo-item]',

@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { TodoItemComponent } from '../todo-item/todo-item.component';
 import { CdkDragDrop, CdkDropList, CdkDrag, moveItemInArray } from '@angular/cdk/drag-drop';
 import { AddTodoComponent } from '../add-todo/add-todo.component';
-import { Todo } from '../../../models/todo.interface';
+import { Todo } from '../../../models/todo.model';
 
 @Component({
   selector: 'app-todo-group',

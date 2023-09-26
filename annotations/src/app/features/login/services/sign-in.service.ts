@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { environment } from 'src/environments/environment.development';
 import { UserSignInDTO, UserSignInResponse } from '../models/login.models';
+import { UserService } from 'src/app/core/services/user.service';
 
 @Injectable({
   providedIn: 'root',
@@ -12,13 +13,14 @@ export class SignInService {
   apiErrors = new BehaviorSubject<string[]>([]);
   loading = new BehaviorSubject<boolean>(false);
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private http: HttpClient, private router: Router, private userService: UserService) {}
 
   signIn(value: UserSignInDTO) {
     this.loading.next(true);
     return this.http.post<UserSignInResponse>(`${environment.API_URL}/api/auth/sign-in`, value).subscribe({
       next: (res) => {
         this.resetSubjects();
+        this.userService.fetchUser();
         this.router.navigate(['/personal']);
       },
       error: (res) => {
