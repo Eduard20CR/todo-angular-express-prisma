@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { NavigationComponent } from './core/components/navigation/navigation.component';
 import { FooterComponent } from './core/components/footer/footer.component';
+import { PopupMessageComponent } from './core/components/popup-message/popup-message.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, NavigationComponent, FooterComponent],
+  imports: [CommonModule, RouterOutlet, NavigationComponent, FooterComponent, PopupMessageComponent],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
