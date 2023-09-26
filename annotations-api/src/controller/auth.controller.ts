@@ -23,19 +23,22 @@ export const signUpUser: RequestHandler = async (req, res, next) => {
 };
 export const signInUser: RequestHandler = async (req, res, next) => {
   try {
+    console.log(req.cookies);
+
     const { email, password } = req.body;
 
     const user = await prisma.user.findUnique({ where: { email } });
 
-    if (!user) throw new CustomError("Invalid used credentials", 400);
+    if (!user) throw new CustomError("Invalid user credentials", 401);
 
     const isPasswordValid = await bcrypt.compare(password, user.password);
 
-    if (!isPasswordValid) return res.status(400).json({ message: "Invalid used credentials" });
+    if (!isPasswordValid) throw new CustomError("Invalid user credentials", 401);
 
     const jwt = sign({ id: user.id, email: user.email, role: user.roleId }, process.env.JWT_SECRET!, { expiresIn: "1h" });
+    res.cookie("jwt", jwt, { httpOnly: true, maxAge: 3600000 });
 
-    return res.json({ message: "User logged in", token: jwt });
+    return res.json({ message: "User logged in" });
   } catch (error) {
     next(error);
   }

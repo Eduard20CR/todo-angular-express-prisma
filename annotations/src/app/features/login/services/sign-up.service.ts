@@ -19,10 +19,9 @@ export class SignUpService {
     return this.http.post(`${environment.API_URL}/api/auth/sign-up`, value).subscribe({
       next: (value) => {
         this.router.navigate(['/sign-in']);
+        this.resetSubjects();
       },
       error: (res) => {
-        console.log(res);
-
         switch (res.status) {
           case 400:
             this.apiErrors.next(res.error.errors);
@@ -37,14 +36,15 @@ export class SignUpService {
 
         this.loading.next(false);
       },
-      complete: () => {
-        // console.log('my complete');
-        this.loading.next(false);
-      },
     });
   }
 
   emailAlreadyRegistered(email: string): Observable<emailAlreadyRegisteredValidator> {
     return this.http.post<emailAlreadyRegisteredValidator>(`${environment.API_URL}/api/auth/email-already-registered/`, { email });
+  }
+
+  private resetSubjects() {
+    this.apiErrors.next([]);
+    this.loading.next(false);
   }
 }

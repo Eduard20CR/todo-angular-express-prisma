@@ -1,6 +1,8 @@
 import express from "express";
 import cors from "cors";
 import passport from "passport";
+import morgan from "morgan";
+import cookieParser from "cookie-parser";
 
 import todosRouter from "./router/todos.router";
 import notesRouter from "./router/notes.router";
@@ -10,15 +12,20 @@ import initPassportJwt from "./util/passport-jwt";
 import usersRouter from "./router/users.router";
 import errorHandlerMiddleware from "./middlewares/errorHandling.middleware";
 import notFound from "./router/not-found.router";
-import morgan from "morgan";
 
 const app = express();
 
-initPassportJwt(passport);
-
+app.use(cookieParser());
 app.use(express.json());
-app.use(cors());
+app.use(
+  cors({
+    origin: "http://localhost:4200",
+    credentials: true,
+  })
+);
 app.use(morgan("dev"));
+
+initPassportJwt(passport);
 
 app.use("/api/auth", authRouter);
 

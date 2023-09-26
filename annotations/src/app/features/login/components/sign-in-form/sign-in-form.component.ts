@@ -5,18 +5,21 @@ import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angula
 import { FormsHelpersService } from 'src/app/core/services/forms-helpers.service';
 import { UserSignInDTO } from '../../models/login.models';
 import { SignInService } from '../../services/sign-in.service';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: '[app-sign-in-form]',
   standalone: true,
-  imports: [CommonModule, ContainerComponent, ReactiveFormsModule],
+  imports: [CommonModule, ContainerComponent, ReactiveFormsModule, MatProgressSpinnerModule, RouterLink],
   templateUrl: './sign-in-form.component.html',
   styleUrls: ['./sign-in-form.component.scss'],
 })
 export class SignInFormComponent {
-  fh = inject(FormsHelpersService);
+  apiErrors$ = this.signInService.apiErrors;
+  loading$ = this.signInService.loading;
 
-  constructor(private signInService: SignInService) {}
+  constructor(private signInService: SignInService, public fh: FormsHelpersService) {}
 
   form = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),

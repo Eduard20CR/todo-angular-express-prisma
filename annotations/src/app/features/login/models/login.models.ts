@@ -9,6 +9,13 @@ export interface UserSignInDTO {
   password: string;
 }
 
+export interface UserSignInResponse {
+  mesage: string;
+  data: {
+    token: string;
+  };
+}
+
 export interface emailAlreadyRegisteredValidator {
   exists: boolean;
 }

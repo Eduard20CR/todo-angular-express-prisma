@@ -10,7 +10,7 @@ export function emailAlreadyRegisteredValidator(authService: SignUpService): Asy
         return authService.emailAlreadyRegistered(email).pipe(
           catchError((error) => {
             switch (error?.status ?? 500) {
-              case 404:
+              case 400:
                 return of({ email: true });
               default:
                 return of({ server: true });
