@@ -17,18 +17,14 @@ export class AuthService {
         if (res.data.user) {
           return true;
         } else {
-          this.onError();
+          this.userService.logOut();
           return false;
         }
       }),
       catchError((err) => {
-        this.onError();
+        this.userService.logOut();
         return throwError(() => err);
       })
     );
-  }
-  onError() {
-    this.userService.deleteUser();
-    this.router.navigate(['/sign-in']);
   }
 }

@@ -5,35 +5,30 @@
         <li class="mr-auto">
           <a class="py-3 px-2 inline-block cursor-pointer" routerLink="/">NOTTI</a>
         </li>
-
-        <li>
-          <ul class="flex gap-5" *ngIf="!(user$ | async); else logged">
-            <li>
-              <a class="py-3 px-2 inline-block cursor-pointer" routerLink="/sign-up">
-                <span routerLinkActive="border-b border-b-white">Sign-Up</span>
-              </a>
-            </li>
-            <li>
-              <a class="py-3 px-2 inline-block cursor-pointer" routerLink="/sign-in">
-                <span routerLinkActive="border-b border-b-white">Sign-In</span>
-              </a>
-            </li>
-          </ul>
-          <ng-template #logged>
-            <ul class="flex gap-5">
-              <li>
-                <a class="py-3 px-2 inline-block cursor-pointer" routerLink="/personal">
-                  <span routerLinkActive="border-b border-b-white">Personal</span>
-                </a>
-              </li>
-              <li>
-                <a class="py-3 px-2 inline-block cursor-pointer text-gray" (click)="logOut()">
-                  <span>Log-out</span>
-                </a>
-              </li>
-            </ul>
-          </ng-template>
-        </li>
+        <ng-template [ngIf]="user$ | async" [ngIfElse]="notLogged">
+          <li>
+            <a class="py-3 px-2 inline-block cursor-pointer" routerLink="/personal">
+              <span routerLinkActive="border-b border-b-white">Personal</span>
+            </a>
+          </li>
+          <li>
+            <a class="py-3 px-2 inline-block cursor-pointer text-gray" (click)="logOut()">
+              <span>Log-out</span>
+            </a>
+          </li>
+        </ng-template>
+        <ng-template #notLogged>
+          <li>
+            <a class="py-3 px-2 inline-block cursor-pointer" routerLink="/sign-in">
+              <span routerLinkActive="border-b border-b-white">Sign-In</span>
+            </a>
+          </li>
+          <li>
+            <a class="py-3 px-2 inline-block cursor-pointer" routerLink="/sign-up">
+              <span routerLinkActive="border-b border-b-white">Sign-Up</span>
+            </a>
+          </li>
+        </ng-template>
       </ul>
     </nav>
   </div>

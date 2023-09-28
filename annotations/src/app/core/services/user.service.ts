@@ -19,28 +19,24 @@ export class UserService {
   emitUser(user: User | null) {
     this.user.next(user);
   }
-  deleteUser() {
-    this.user.next(null);
-  }
   fetchUser() {
     return this.http.get<UserRes>(`${environment.API_URL}/api/auth/me`).subscribe({
       next: (res) => {
         this.emitUser(res.data.user);
       },
       error: (err) => {
-        this.emitUser(null);
+        this.logOut();
       },
     });
   }
   logOut() {
     this.http.get(`${environment.API_URL}/api/auth/log-out`).subscribe({
       next: (res) => {
-        console.log(res);
         this.emitUser(null);
-        this.router.navigate(['/']);
+        this.router.navigate(['/sign-in']);
       },
       error: (err) => {
-        // this.emitUser(null);
+        alert('Something went wrong');
       },
     });
   }
