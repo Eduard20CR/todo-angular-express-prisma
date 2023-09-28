@@ -11,6 +11,12 @@ import { environment } from 'src/environments/environment.development';
 export class SignUpService {
   apiErrors = new BehaviorSubject<string[]>([]);
   loading = new BehaviorSubject<boolean>(false);
+  get apiErrors$() {
+    return this.apiErrors.asObservable();
+  }
+  get loading$() {
+    return this.loading.asObservable();
+  }
 
   constructor(private http: HttpClient, private router: Router) {}
 
@@ -33,17 +39,14 @@ export class SignUpService {
             this.apiErrors.next(['Server Error']);
             break;
         }
-
         this.loading.next(false);
       },
     });
   }
-
   emailAlreadyRegistered(email: string): Observable<emailAlreadyRegisteredValidator> {
     return this.http.post<emailAlreadyRegisteredValidator>(`${environment.API_URL}/api/auth/email-already-registered/`, { email });
   }
-
-  private resetSubjects() {
+  resetSubjects() {
     this.apiErrors.next([]);
     this.loading.next(false);
   }

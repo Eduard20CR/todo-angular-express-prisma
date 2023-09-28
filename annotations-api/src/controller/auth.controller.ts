@@ -23,8 +23,6 @@ export const signUpUser: RequestHandler = async (req, res, next) => {
 };
 export const signInUser: RequestHandler = async (req, res, next) => {
   try {
-    console.log(req.cookies);
-
     const { email, password } = req.body;
 
     const user = await prisma.user.findUnique({ where: { email } });
@@ -38,7 +36,16 @@ export const signInUser: RequestHandler = async (req, res, next) => {
     const jwt = sign({ id: user.id, email: user.email, role: user.roleId }, process.env.JWT_SECRET!, { expiresIn: "1h" });
     res.cookie("jwt", jwt, { httpOnly: true, maxAge: 3600000 });
 
-    return res.json({ message: "User logged in" });
+    return res.json({
+      message: "User logged in",
+      data: {
+        user: {
+          id: user.id,
+          email: user.email,
+          role: user.roleId,
+        },
+      },
+    });
   } catch (error) {
     next(error);
   }
@@ -55,13 +62,35 @@ export const emailAlreadyRegistered: RequestHandler = async (req, res, next) => 
   }
 };
 export const me: RequestHandler = async (req, res, next) => {
-  const response: { message: string; data: { validToken: boolean } } = { message: "Not authenticated", data: { validToken: false } };
+  const response: {
+    message: string;
+    data: {
+      user: {
+        id: string;
+        email: string;
+        role: string;
+      } | null;
+    };
+  } = { message: "Not authenticated", data: { user: null } };
+
   if (!req.cookies["jwt"]) return res.status(401).json(response);
 
   const user = await verify(req.cookies["jwt"], process.env.JWT_SECRET!);
   if (user === undefined) return res.status(401).json(response);
 
-  response.data.validToken = true;
+  response.data.user = {
+    id: (user as JwtPayload).id,
+    email: (user as JwtPayload).email,
+    role: (user as JwtPayload).role,
+  };
   response.message = "Authenticated";
   return res.status(200).json(response);
+};
+export const logOut: RequestHandler = async (req, res, next) => {
+  try {
+    res.clearCookie("jwt");
+    res.status(200).json({ message: "Logged out" });
+  } catch (error) {
+    next(error);
+  }
 };

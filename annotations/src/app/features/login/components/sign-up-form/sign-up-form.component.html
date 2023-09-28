@@ -44,7 +44,6 @@
         <div *ngIf="fh.hasFormError(form, 'confirmationPassword')">Confirmation password does not match.</div>
       </div>
     </div>
-
     <div *ngIf="apiErrors$ | async as errors">
       <p class="text-tertiary" *ngFor="let error of errors">{{ error }}</p>
     </div>

@@ -8,3 +8,8 @@ export interface User {
   email: string;
   role: ROLE;
 }
+
+export interface UserRes {
+  data: { user: User };
+  message: string;
+}

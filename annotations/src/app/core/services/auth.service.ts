@@ -14,7 +14,7 @@ export class AuthService {
   isLoggedIn(): Observable<boolean> {
     return this.http.get<{ message: string; data?: any }>(`${environment.API_URL}/api/auth/me`).pipe(
       map((res) => {
-        if (res.data.validToken) {
+        if (res.data.user) {
           return true;
         } else {
           this.onError();

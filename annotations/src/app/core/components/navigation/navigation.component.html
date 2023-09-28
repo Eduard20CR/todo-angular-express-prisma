@@ -5,13 +5,9 @@
         <li class="mr-auto">
           <a class="py-3 px-2 inline-block cursor-pointer" routerLink="/">NOTTI</a>
         </li>
+
         <li>
-          <a class="py-3 px-2 inline-block cursor-pointer" routerLink="/">
-            <span routerLinkActive="border-b border-b-white" [routerLinkActiveOptions]="{ exact: true }">Home</span>
-          </a>
-        </li>
-        <li>
-          <ul class="flex gap-5">
+          <ul class="flex gap-5" *ngIf="!(user$ | async); else logged">
             <li>
               <a class="py-3 px-2 inline-block cursor-pointer" routerLink="/sign-up">
                 <span routerLinkActive="border-b border-b-white">Sign-Up</span>
@@ -22,12 +18,21 @@
                 <span routerLinkActive="border-b border-b-white">Sign-In</span>
               </a>
             </li>
-            <li>
-              <a class="py-3 px-2 inline-block cursor-pointer" routerLink="/personal">
-                <span routerLinkActive="border-b border-b-white">Personal</span>
-              </a>
-            </li>
           </ul>
+          <ng-template #logged>
+            <ul class="flex gap-5">
+              <li>
+                <a class="py-3 px-2 inline-block cursor-pointer" routerLink="/personal">
+                  <span routerLinkActive="border-b border-b-white">Personal</span>
+                </a>
+              </li>
+              <li>
+                <a class="py-3 px-2 inline-block cursor-pointer text-gray" (click)="logOut()">
+                  <span>Log-out</span>
+                </a>
+              </li>
+            </ul>
+          </ng-template>
         </li>
       </ul>
     </nav>

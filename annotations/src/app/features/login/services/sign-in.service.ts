@@ -10,8 +10,14 @@ import { UserService } from 'src/app/core/services/user.service';
   providedIn: 'root',
 })
 export class SignInService {
-  apiErrors = new BehaviorSubject<string[]>([]);
-  loading = new BehaviorSubject<boolean>(false);
+  private apiErrors = new BehaviorSubject<string[]>([]);
+  private loading = new BehaviorSubject<boolean>(false);
+  get apiErrors$() {
+    return this.apiErrors.asObservable();
+  }
+  get loading$() {
+    return this.loading.asObservable();
+  }
 
   constructor(private http: HttpClient, private router: Router, private userService: UserService) {}
 
@@ -19,8 +25,7 @@ export class SignInService {
     this.loading.next(true);
     return this.http.post<UserSignInResponse>(`${environment.API_URL}/api/auth/sign-in`, value).subscribe({
       next: (res) => {
-        this.resetSubjects();
-        this.userService.fetchUser();
+        this.userService.emitUser(res.data.user);
         this.router.navigate(['/personal']);
       },
       error: (res) => {
@@ -38,13 +43,11 @@ export class SignInService {
             this.apiErrors.next(['Server Error']);
             break;
         }
-
         this.loading.next(false);
       },
     });
   }
-
-  private resetSubjects() {
+  resetSubjects() {
     this.apiErrors.next([]);
     this.loading.next(false);
   }

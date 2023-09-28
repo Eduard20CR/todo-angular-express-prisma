@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ContainerComponent } from 'src/app/shared/components/container/container.component';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -18,11 +18,9 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
   templateUrl: './sign-up-form.component.html',
   styleUrls: ['./sign-up-form.component.scss'],
 })
-export class SignUpFormComponent {
+export class SignUpFormComponent implements OnDestroy {
   apiErrors$ = this.signUpService.apiErrors;
   loading$ = this.signUpService.loading;
-
-  constructor(private signUpService: SignUpService, public fh: FormsHelpersService) {}
 
   form = new FormGroup(
     {
@@ -32,6 +30,12 @@ export class SignUpFormComponent {
     },
     [confirmPasswordValidator()]
   );
+
+  constructor(private signUpService: SignUpService, public fh: FormsHelpersService) {}
+
+  ngOnDestroy(): void {
+    this.signUpService.resetSubjects();
+  }
 
   submit() {
     if (this.form.invalid) return this.form.markAllAsTouched();

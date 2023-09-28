@@ -1,3 +1,5 @@
+import { User } from 'src/app/core/models/user.model';
+
 export interface UserSignUpDTO {
   email: string;
   password: string;
@@ -12,7 +14,7 @@ export interface UserSignInDTO {
 export interface UserSignInResponse {
   mesage: string;
   data: {
-    token: string;
+    user: User;
   };
 }
 
