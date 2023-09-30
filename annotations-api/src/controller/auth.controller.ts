@@ -3,6 +3,7 @@ import bcrypt from "bcrypt";
 import prisma from "../db/prisma";
 import { CustomError } from "../util/errorUtil";
 import { JwtPayload, sign, verify } from "jsonwebtoken";
+import { JWT_DURATION } from "../constants/role.enum";
 
 export const signUpUser: RequestHandler = async (req, res, next) => {
   try {
@@ -14,9 +15,9 @@ export const signUpUser: RequestHandler = async (req, res, next) => {
     const salt = await bcrypt.genSalt(10);
     const hashPasword = await bcrypt.hash(password, salt);
 
-    const { password: passwordFromDB, ...user } = await prisma.user.create({ data: { email, password: hashPasword, role: { connect: { id: 1 } } } });
+    await prisma.user.create({ data: { email, password: hashPasword, role: { connect: { id: 1 } } } });
 
-    return res.json({ message: "User created", user });
+    return res.json({ message: "User created" });
   } catch (error) {
     next(error);
   }
@@ -33,17 +34,15 @@ export const signInUser: RequestHandler = async (req, res, next) => {
 
     if (!isPasswordValid) throw new CustomError("Invalid user credentials", 401);
 
-    const jwt = sign({ id: user.id, email: user.email, role: user.roleId }, process.env.JWT_SECRET!, { expiresIn: "1h" });
-    res.cookie("jwt", jwt, { httpOnly: true, maxAge: 3600000 });
+    const jwt = sign({ id: user.id, email: user.email, role: user.roleId }, process.env.JWT_SECRET!, { expiresIn: JWT_DURATION });
+    res.cookie("jwt", jwt, { httpOnly: true, maxAge: JWT_DURATION });
 
     return res.json({
       message: "User logged in",
       data: {
-        user: {
-          id: user.id,
-          email: user.email,
-          role: user.roleId,
-        },
+        id: user.id,
+        email: user.email,
+        role: user.roleId,
       },
     });
   } catch (error) {
@@ -65,20 +64,18 @@ export const me: RequestHandler = async (req, res, next) => {
   const response: {
     message: string;
     data: {
-      user: {
-        id: string;
-        email: string;
-        role: string;
-      } | null;
-    };
-  } = { message: "Not authenticated", data: { user: null } };
+      id: string;
+      email: string;
+      role: string;
+    } | null;
+  } = { message: "Not authenticated", data: null };
 
   if (!req.cookies["jwt"]) return res.status(401).json(response);
 
   const user = await verify(req.cookies["jwt"], process.env.JWT_SECRET!);
   if (user === undefined) return res.status(401).json(response);
 
-  response.data.user = {
+  response.data = {
     id: (user as JwtPayload).id,
     email: (user as JwtPayload).email,
     role: (user as JwtPayload).role,

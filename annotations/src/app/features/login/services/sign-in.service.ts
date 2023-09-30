@@ -5,6 +5,7 @@ import { BehaviorSubject } from 'rxjs';
 import { environment } from 'src/environments/environment.development';
 import { UserSignInDTO, UserSignInResponse } from '../models/login.models';
 import { UserService } from 'src/app/core/services/user.service';
+import { ApiResponse, User } from 'src/app/core/models/user.model';
 
 @Injectable({
   providedIn: 'root',
@@ -23,9 +24,9 @@ export class SignInService {
 
   signIn(value: UserSignInDTO) {
     this.loading.next(true);
-    return this.http.post<UserSignInResponse>(`${environment.API_URL}/api/auth/sign-in`, value).subscribe({
+    return this.http.post<ApiResponse<User>>(`${environment.API_URL}/api/auth/sign-in`, value).subscribe({
       next: (res) => {
-        this.userService.emitUser(res.data.user);
+        this.userService.emitUser(res.data);
         this.router.navigate(['/personal']);
       },
       error: (res) => {

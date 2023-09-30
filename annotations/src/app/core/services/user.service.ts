@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { User, UserRes } from '../models/user.model';
+import { ApiResponse, User } from '../models/user.model';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Router } from '@angular/router';
@@ -20,9 +20,9 @@ export class UserService {
     this.user.next(user);
   }
   fetchUser() {
-    return this.http.get<UserRes>(`${environment.API_URL}/api/auth/me`).subscribe({
+    return this.http.get<ApiResponse<User>>(`${environment.API_URL}/api/auth/me`).subscribe({
       next: (res) => {
-        this.emitUser(res.data.user);
+        this.emitUser(res.data);
       },
       error: (err) => {
         this.logOut();
