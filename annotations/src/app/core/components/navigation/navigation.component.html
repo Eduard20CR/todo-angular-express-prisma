@@ -1,11 +1,38 @@
 <header class="border-b border-white py-3 fixed top-0 w-full bg-black z-50">
   <div app-container>
     <nav>
-      <ul class="flex gap-5 uppercase font-bold">
+      <ul class="flex gap-5 uppercase font-bold relative">
         <li class="mr-auto">
           <a class="py-3 px-2 inline-block cursor-pointer" routerLink="/">NOTTI</a>
         </li>
-        <ng-template [ngIf]="user$ | async" [ngIfElse]="notLogged">
+        <button class="inline-block px-4 py-1 my-1 uppercase font-bold border rounded" data-menu-no-action (click)="toggleMenu()">Menu</button>
+        <div class="absolute right-0 top-full inline-block px-4 py-1 uppercase font-bold border rounded-b bg-black mt-3" data-menu-no-action *ngIf="menuOpen">
+          <ng-template [ngIf]="user$ | async" [ngIfElse]="notLogged">
+            <li>
+              <a class="py-3 px-2 inline-block cursor-pointer" routerLink="/personal">
+                <span routerLinkActive="border-b border-b-white">Personal</span>
+              </a>
+            </li>
+            <li>
+              <a class="py-3 px-2 inline-block cursor-pointer text-gray" (click)="logOut()">
+                <span>Log-out</span>
+              </a>
+            </li>
+          </ng-template>
+          <ng-template #notLogged>
+            <li>
+              <a class="py-3 px-2 inline-block cursor-pointer" routerLink="/sign-in">
+                <span routerLinkActive="border-b border-b-white">Sign-In</span>
+              </a>
+            </li>
+            <li>
+              <a class="py-3 px-2 inline-block cursor-pointer" routerLink="/sign-up">
+                <span routerLinkActive="border-b border-b-white">Sign-Up</span>
+              </a>
+            </li>
+          </ng-template>
+        </div>
+        <!-- <ng-template [ngIf]="user$ | async" [ngIfElse]="notLogged">
           <li>
             <a class="py-3 px-2 inline-block cursor-pointer" routerLink="/personal">
               <span routerLinkActive="border-b border-b-white">Personal</span>
@@ -28,7 +55,7 @@
               <span routerLinkActive="border-b border-b-white">Sign-Up</span>
             </a>
           </li>
-        </ng-template>
+        </ng-template> -->
       </ul>
     </nav>
   </div>

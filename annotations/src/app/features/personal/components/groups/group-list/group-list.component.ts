@@ -40,7 +40,7 @@ export class GroupListComponent implements AfterViewInit {
 
   handleIsMobile(width: number) {
     this.isMobile = width <= 640;
-    if (this.isMobile) {
+    if (!this.isMobile) {
       this.mobileMenuOpen = false;
     }
   }
