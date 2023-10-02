@@ -27,16 +27,20 @@ export class AddGroupComponent {
   }
 
   toggleAddMode() {
-    this.addMode = !this.addMode;
-    if (this.addMode) this.open();
-    else this.close();
+    if (this.addMode) {
+      this.close();
+    } else {
+      this.open();
+    }
   }
 
   open() {
+    this.addMode = true;
     this.focusInput();
   }
 
-  close() {
+  public close() {
+    this.addMode = false;
     this.form.reset();
   }
 

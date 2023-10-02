@@ -11,4 +11,6 @@ import { CommonModule } from '@angular/common';
 export class ContainerComponent {
   @Input() maxWidth: string = '2xl';
   @Input() paddingX: string = '5';
+  @Input() paddingXMobile: string = '5';
+  @Input() maxWidthMobile: string = '';
 }
