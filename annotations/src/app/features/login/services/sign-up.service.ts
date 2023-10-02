@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject, Observable, catchError, throwError, timeout } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { UserSignUpDTO, emailAlreadyRegisteredValidator } from '../models/login.models';
 import { environment } from 'src/environments/environment.development';
 
@@ -11,12 +11,8 @@ import { environment } from 'src/environments/environment.development';
 export class SignUpService {
   apiErrors = new BehaviorSubject<string[]>([]);
   loading = new BehaviorSubject<boolean>(false);
-  get apiErrors$() {
-    return this.apiErrors.asObservable();
-  }
-  get loading$() {
-    return this.loading.asObservable();
-  }
+  apiErrors$ = this.apiErrors.asObservable();
+  loading$ = this.loading.asObservable();
 
   constructor(private http: HttpClient, private router: Router) {}
 

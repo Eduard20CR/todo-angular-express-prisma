@@ -1,6 +1,7 @@
 <nav
-  class="fixed w-full -left-full top-[4.55rem] -translate-x-10 sm:left-0 sm:translate-x-0 sm:relative sm:w-auto sm:top-0 bg-black z-30 border-b sm:border-b-0 transition-none sm:transition-all"
+  class="fixed w-full -left-full top-[4.55rem] -translate-x-10 sm:left-0 sm:translate-x-0 sm:relative sm:w-auto sm:top-0 bg-black z-30 border-b sm:border-b-0"
   [ngClass]="{
+  'transition-[left]':activateTransition,
   'left-0 translate-x-0': mobileMenuOpen && isMobile,
 }"
 >

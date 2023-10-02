@@ -13,12 +13,8 @@ import { ApiResponse, User } from 'src/app/core/models/user.model';
 export class SignInService {
   private apiErrors = new BehaviorSubject<string[]>([]);
   private loading = new BehaviorSubject<boolean>(false);
-  get apiErrors$() {
-    return this.apiErrors.asObservable();
-  }
-  get loading$() {
-    return this.loading.asObservable();
-  }
+  apiErrors$ = this.apiErrors.asObservable();
+  loading$ = this.loading.asObservable();
 
   constructor(private http: HttpClient, private router: Router, private userService: UserService) {}
 
