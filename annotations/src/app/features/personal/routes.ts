@@ -1,4 +1,5 @@
 import { Route } from '@angular/router';
+import { notesResolver } from 'src/app/core/resolver/notes.resolver';
 
 export default [
   {
@@ -12,6 +13,9 @@ export default [
       {
         path: 'notes/:id',
         loadComponent: () => import('./pages/note-list/note-list.component').then((m) => m.NoteListComponent),
+        resolve: {
+          notes: notesResolver,
+        },
       },
       {
         path: 'todos/:id',

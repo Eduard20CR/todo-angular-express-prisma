@@ -2,7 +2,7 @@ import { Component, ElementRef, ViewChild, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { PlusIconComponent } from 'src/app/shared/components/icons/plus-icon/plus-icon.component';
-import { AnnotationsGroupsService } from '../../../services/annotations-groups.service';
+import { GroupsService } from '../../../services/groups.service';
 
 @Component({
   selector: '[app-add-group]',
@@ -13,37 +13,32 @@ import { AnnotationsGroupsService } from '../../../services/annotations-groups.s
   host: { class: 'flex  min-h-[5rem] items-stretch' },
 })
 export class AddGroupComponent {
-  annotationsGroupsService = inject(AnnotationsGroupsService);
   @ViewChild('inputNewTodo', { static: false }) input!: ElementRef<HTMLInputElement>;
   form = new FormGroup({
-    title: new FormControl(null, [Validators.required, Validators.minLength(3), Validators.maxLength(50)]),
+    name: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]),
   });
   addMode = false;
 
+  constructor(private groupsService: GroupsService) {}
+
   submit() {
     if (this.form.invalid) return;
-    this.annotationsGroupsService.addGroup({ id: Date.now().toString(), title: this.form.get('title')?.value ?? '' });
+    this.groupsService.addGroup({ id: '', name: this.form.get('name')?.value as string });
     this.form.reset();
   }
 
   toggleAddMode() {
-    if (this.addMode) {
-      this.close();
-    } else {
-      this.open();
-    }
+    this.addMode ? this.close() : this.open();
   }
 
   open() {
     this.addMode = true;
     this.focusInput();
   }
-
   public close() {
     this.addMode = false;
     this.form.reset();
   }
-
   focusInput() {
     setTimeout(() => {
       if (this.input) this.input.nativeElement.focus();

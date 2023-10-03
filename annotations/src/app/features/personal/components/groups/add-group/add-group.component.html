@@ -7,7 +7,7 @@
       <i class="rotate-45 inline-block" app-plus-icon></i>
     </button>
     <form class="w-full mr-[7rem] sm:mr-0" [formGroup]="form" (ngSubmit)="submit()" (keydown.escape)="toggleAddMode()">
-      <input class="bg-transparent border-b border-white text-white py-1 px-3 w-full" type="text" #inputNewTodo formControlName="title" />
+      <input class="bg-transparent border-b border-white text-white py-1 px-3 w-full" type="text" #inputNewTodo formControlName="name" />
     </form>
   </div>
 </ng-container>

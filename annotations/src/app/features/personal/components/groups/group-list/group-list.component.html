@@ -1,16 +1,23 @@
 <nav
-  class="fixed w-full -left-full top-[4.55rem] -translate-x-10 sm:left-0 sm:translate-x-0 sm:relative sm:w-auto sm:top-0 bg-black z-30 border-b sm:border-b-0"
+  class="fixed w-full sm:h-full -left-full top-[4.55rem] -translate-x-10 sm:left-0 sm:translate-x-0 sm:relative sm:w-auto sm:top-0 bg-black z-30 border-b sm:border-b-0"
   [ngClass]="{
   'transition-[left]':activateTransition,
   'left-0 translate-x-0': mobileMenuOpen && isMobile,
 }"
 >
-  <ul class="overflow-y-scroll max-h-96 sm:overflow-y-visible sm:max-h-none" #scroll>
-    <li app-add-group class="cursor-pointer" #newGroup></li>
-    <li *ngFor="let group of groups | async" class="cursor-pointer" routerLinkActive="bg-primary">
-      <app-group-item [group]="group"></app-group-item>
-    </li>
-  </ul>
+  <ng-template [ngIf]="loading$ | async" [ngIfElse]="groups">
+    <div class="flex justify-center my-5 h-full items-center pb-10 pt-10 sm:pt-0">
+      <mat-spinner class="fill-primary"></mat-spinner>
+    </div>
+  </ng-template>
+  <ng-template #groups>
+    <ul class="overflow-y-scroll max-h-96 sm:overflow-y-visible sm:max-h-none" #scroll>
+      <li app-add-group class="cursor-pointer" #newGroup></li>
+      <li *ngFor="let group of groups$ | async" class="cursor-pointer" routerLinkActive="bg-primary">
+        <app-group-item [group]="group"></app-group-item>
+      </li>
+    </ul>
+  </ng-template>
 </nav>
 <div
   class="fixed right-5 top-[4.4rem] z-30 inline-block px-4 py-2 uppercase font-bold border rounded-b cursor-pointer bg-black sm:hidden"

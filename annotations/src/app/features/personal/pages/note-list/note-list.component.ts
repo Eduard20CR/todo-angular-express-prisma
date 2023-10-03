@@ -16,6 +16,8 @@ export class NoteListComponent implements OnInit {
   activatedRoute = inject(ActivatedRoute);
 
   ngOnInit(): void {
-    this.activatedRoute.params.subscribe((params) => {});
+    this.activatedRoute.data.subscribe((data) => {
+      console.log(data);
+    });
   }
 }

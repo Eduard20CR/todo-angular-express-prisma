@@ -8,7 +8,7 @@ export const getGroups: RequestHandler = async (req, res, next) => {
     const user = req.user as User;
     const groups = await prisma.group.findMany({ where: { userId: user.id } });
 
-    return res.json({ data: groups });
+    return res.status(200).json({ message: "done", data: groups });
   } catch (error) {
     next(error);
   }
