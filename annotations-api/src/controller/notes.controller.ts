@@ -1,24 +1,39 @@
 import { RequestHandler } from "express";
 import prisma from "../db/prisma";
+import { User } from "@prisma/client";
 
-export const getNotes: RequestHandler = async (req, res) => {
-  const notes = await prisma.note.findMany();
-  return res.json(notes);
-};
-export const getNoteById: RequestHandler = async (req, res) => {
-  const id = req.params.id ?? "-1";
-  if (id === "-1") {
-    return res.status(400).json({ message: "Invalid id" });
+export const getNotes: RequestHandler = async (req, res, next) => {
+  try {
+    const user = req.user as User;
+    const groupId = Number(req.params.groupId);
+    console.log(groupId);
+    const notes = await prisma.note.findMany({ where: { groupId } });
+
+    return res.json(notes);
+  } catch (error) {
+    next(error);
   }
-  const note = await prisma.note.findUnique({ where: { id: 1 } });
-  return res.json(note);
 };
-export const createNote: RequestHandler = async (req, res) => {
+export const getNoteById: RequestHandler = async (req, res, next) => {
+  try {
+    const user = req.user as User;
+    const groupId = Number(req.params.id);
+    const notes = await prisma.group.findUnique({ where: { id: groupId, userId: user.id }, include: { notes: true } });
+
+    return res.status(200).json({
+      message: "ok",
+      data: notes,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+export const createNote: RequestHandler = async (req, res, next) => {
   return res.json();
 };
-export const updateNote: RequestHandler = async (req, res) => {
+export const updateNote: RequestHandler = async (req, res, next) => {
   return res.json({});
 };
-export const deleteNote: RequestHandler = async (req, res) => {
+export const deleteNote: RequestHandler = async (req, res, next) => {
   return res.json({});
 };

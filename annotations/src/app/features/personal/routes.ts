@@ -14,7 +14,7 @@ export default [
         path: 'notes/:id',
         loadComponent: () => import('./pages/note-list/note-list.component').then((m) => m.NoteListComponent),
         resolve: {
-          notes: notesResolver,
+          group: notesResolver,
         },
       },
       {

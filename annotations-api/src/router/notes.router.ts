@@ -3,7 +3,7 @@ import { createNote, deleteNote, getNoteById, getNotes, updateNote } from "../co
 
 const notesRouter = Router();
 
-notesRouter.get("/", getNotes);
+// notesRouter.get("/", getNotes);
 notesRouter.get("/:id", getNoteById);
 notesRouter.post("/", createNote);
 notesRouter.put("/:id", updateNote);
