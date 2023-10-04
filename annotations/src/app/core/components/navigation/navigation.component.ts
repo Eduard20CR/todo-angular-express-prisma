@@ -29,7 +29,7 @@ export class NavigationComponent {
   }
 
   @HostListener('document:click', ['$event']) clickOutside(event: MouseEvent) {
-    if (!(event.target as HTMLElement).closest('[data-menu-no-action]')) {
+    if (!(event.target as HTMLElement).closest('[data-navigation-no-action]')) {
       this.closeMenu();
     }
   }

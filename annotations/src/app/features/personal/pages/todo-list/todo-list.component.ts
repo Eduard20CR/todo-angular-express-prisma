@@ -16,6 +16,6 @@ export class TodoListComponent implements OnInit {
   activatedRoute = inject(ActivatedRoute);
 
   ngOnInit(): void {
-    this.activatedRoute.params.subscribe((params) => {});
+    // this.activatedRoute.params.subscribe((params) => {});
   }
 }

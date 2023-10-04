@@ -5,8 +5,10 @@
 [] Edit Group Title
 [] Delete Group
 
-[] Toggle note form
-[] Get Notes
-[] Add note
+[X] Toggle note form
+[X] Get Notes
+[X] Add note
 [] Edit Note
 [] Delete Note
+
+[] Componente title

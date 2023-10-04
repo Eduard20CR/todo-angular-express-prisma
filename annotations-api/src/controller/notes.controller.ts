@@ -1,6 +1,7 @@
 import { RequestHandler } from "express";
 import prisma from "../db/prisma";
 import { User } from "@prisma/client";
+import { CustomError } from "../util/errorUtil";
 
 export const getNotes: RequestHandler = async (req, res, next) => {
   try {
@@ -29,11 +30,46 @@ export const getNoteById: RequestHandler = async (req, res, next) => {
   }
 };
 export const createNote: RequestHandler = async (req, res, next) => {
-  return res.json();
+  try {
+    const user = req.user as User;
+    const { groupId, title, content } = req.body;
+    const numberGroupId = Number(groupId);
+
+    const isIserGroup = await prisma.group.findUnique({ where: { id: numberGroupId, userId: user.id } });
+    if (!isIserGroup) {
+      throw new CustomError("Group not found", 404);
+    }
+    const newNote = await prisma.note.create({ data: { title, content, groupId: numberGroupId } });
+
+    return res.json({
+      message: "ok",
+      data: newNote,
+    });
+  } catch (error) {
+    console.log(error);
+
+    next(error);
+  }
 };
 export const updateNote: RequestHandler = async (req, res, next) => {
   return res.json({});
 };
 export const deleteNote: RequestHandler = async (req, res, next) => {
-  return res.json({});
+  try {
+    const user = req.user as User;
+    const id = req.params.id;
+
+    const deletedNote = await prisma.note.delete({
+      where: {
+        id: Number(id),
+        group: {
+          userId: user.id,
+        },
+      },
+    });
+
+    return res.status(200).json({ message: "deleted", data: deletedNote });
+  } catch (error) {
+    next(error);
+  }
 };

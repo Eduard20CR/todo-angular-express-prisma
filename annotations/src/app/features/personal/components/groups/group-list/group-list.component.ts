@@ -47,6 +47,11 @@ export class GroupListComponent implements OnInit, AfterViewInit {
     this.handleIsMobile(event.target.innerWidth);
     this.handleTransition();
   }
+  @HostListener('document:click', ['$event']) clickOutside(event: MouseEvent) {
+    if (!(event.target as HTMLElement).closest('[data-menu-groups-no-action]')) {
+      this.mobileMenuOpen = false;
+    }
+  }
   handleIsMobile(width: number) {
     this.isMobile = width <= 640;
     if (!this.isMobile) {

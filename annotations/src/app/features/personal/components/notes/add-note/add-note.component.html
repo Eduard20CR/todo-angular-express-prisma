@@ -1,6 +1,38 @@
-<article
-  class="border border-gray p-5 rounded flex hover:shadow-md flex-col transition-all w-full items-center justify-center text-gray cursor-pointer"
-  (click)="addNote()"
->
-  <i class="inline-block w-24" app-plus-icon></i>
-</article>
+<ng-template [ngIf]="active" [ngIfElse]="addNote">
+  <form [formGroup]="form" (ngSubmit)="submit()" class="border border-gray p-5 rounded flex hover:shadow-md flex-col w-full text-gray gap-5">
+    <p class="text-xl font-bold">Add Note</p>
+    <input class="bg-transparent border-b border-white text-white py-3 px-3" type="text" name="title" id="title" formControlName="title" placeholder="Title" />
+    <textarea
+      class="bg-transparent border-b border-white text-white py-3 px-3"
+      name="content"
+      id="content"
+      rows="10"
+      formControlName="content"
+      placeholder="Content"
+    ></textarea>
+    <div class="flex justify-between">
+      <button
+        class="inline-flex text-gray hover:bg-tertiary hover:text-white rounded p-1 justify-center items-center transition-colors self-end w-10 h-10"
+        type="button"
+        (click)="toggleMode()"
+      >
+        <i app-trash-icon></i>
+      </button>
+      <button
+        class="inline-flex text-gray hover:bg-secondary hover:text-black rounded p-1 justify-center items-center transition-colors self-end w-10"
+        type="submit"
+      >
+        <i app-plus-icon></i>
+      </button>
+    </div>
+  </form>
+</ng-template>
+
+<ng-template #addNote>
+  <div
+    class="border border-gray p-5 rounded flex hover:shadow-md flex-col transition-all w-full items-center justify-center text-gray cursor-pointer aspect-square"
+    (click)="toggleMode()"
+  >
+    <i class="inline-block w-24" app-plus-icon></i>
+  </div>
+</ng-template>

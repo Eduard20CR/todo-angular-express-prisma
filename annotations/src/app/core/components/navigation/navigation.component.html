@@ -5,8 +5,12 @@
         <li class="mr-auto">
           <a class="py-3 px-2 inline-block cursor-pointer" routerLink="/">NOTTI</a>
         </li>
-        <button class="inline-block px-4 py-1 my-1 uppercase font-bold border rounded" data-menu-no-action (click)="toggleMenu()">Menu</button>
-        <div class="absolute right-0 top-full inline-block px-4 py-1 uppercase font-bold border rounded-b bg-black mt-3" data-menu-no-action *ngIf="menuOpen">
+        <button class="inline-block px-4 py-1 my-1 uppercase font-bold border rounded" data-navigation-no-action (click)="toggleMenu()">Menu</button>
+        <div
+          class="absolute right-0 top-full inline-block px-4 py-1 uppercase font-bold border rounded-b bg-black mt-3"
+          data-navigation-no-action
+          *ngIf="menuOpen"
+        >
           <ng-template [ngIf]="user$ | async" [ngIfElse]="notLogged">
             <li>
               <a class="py-3 px-2 inline-block cursor-pointer" routerLink="/personal">

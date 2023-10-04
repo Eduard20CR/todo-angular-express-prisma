@@ -3,8 +3,8 @@ import { Injectable } from '@angular/core';
 import { ApiResponse } from 'src/app/core/models/user.model';
 import { PopupMessageService } from 'src/app/core/services/popup-message.service';
 import { environment } from 'src/environments/environment';
-import { Note, NoteGroup } from '../models/note.model';
-import { BehaviorSubject, catchError, map, of } from 'rxjs';
+import { Note, NoteDTO, NoteGroup } from '../models/note.model';
+import { BehaviorSubject, Subject, catchError, map, of } from 'rxjs';
 import { Router } from '@angular/router';
 
 @Injectable({
@@ -13,17 +13,22 @@ import { Router } from '@angular/router';
 export class NotesService {
   private notes = new BehaviorSubject<Note[]>([]);
   private name = new BehaviorSubject<string>('Notes');
+  private resetForm = new Subject<void>();
   notes$ = this.notes.asObservable();
   name$ = this.name.asObservable();
+  resetForm$ = this.resetForm.asObservable();
+  private groupId = '';
 
   constructor(private http: HttpClient, private popupMessageService: PopupMessageService, private router: Router) {}
 
   emitNotes(notes: Note[]) {
     this.notes.next(notes);
   }
-
   emitName(name: string) {
     this.name.next(name);
+  }
+  setGroupId(id: string) {
+    this.groupId = id;
   }
 
   fetchNotes(groupsId: string) {
@@ -45,5 +50,36 @@ export class NotesService {
         return of(errorData);
       })
     );
+  }
+
+  addNote(newNote: Note) {
+    const body: NoteDTO = {
+      ...newNote,
+      groupId: this.groupId,
+    };
+
+    this.http.post<ApiResponse<Note>>(`${environment.API_URL}/api/notes/`, body).subscribe({
+      next: (res) => {
+        this.notes.next([...this.notes.getValue(), res.data]);
+        this.resetForm.next();
+      },
+      error: (err) => {
+        console.log(err);
+        this.popupMessageService.addMessage('Could not add note');
+      },
+    });
+  }
+
+  deleteNote(id: number) {
+    this.http.delete<ApiResponse<Note>>(`${environment.API_URL}/api/notes/${id}`).subscribe({
+      next: (res) => {
+        const newNotes = this.notes.getValue().filter((note) => note.id !== id);
+        this.notes.next(newNotes);
+      },
+      error: (err) => {
+        console.log(err);
+        this.popupMessageService.addMessage('Could not delete note');
+      },
+    });
   }
 }

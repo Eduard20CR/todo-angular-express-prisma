@@ -5,6 +5,7 @@ import { EditIconComponent } from 'src/app/shared/components/icons/edit-icon/edi
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CheckIconComponent } from 'src/app/shared/components/icons/check-icon/check-icon.component';
 import { TrashIconComponent } from 'src/app/shared/components/icons/trash-icon/trash-icon.component';
+import { NotesService } from '../../../services/notes.service';
 
 @Component({
   selector: 'app-note-item',
@@ -15,20 +16,24 @@ import { TrashIconComponent } from 'src/app/shared/components/icons/trash-icon/t
   host: { class: 'flex ' },
 })
 export class NoteItemComponent implements OnInit {
-  @Input({ required: true }) note: Note = { id: 0, title: '', description: '' };
+  @Input({ required: true }) note: Note = { id: 0, title: '', content: '' };
   form!: FormGroup;
   editMode = false;
+
+  constructor(private notesService: NotesService) {}
 
   ngOnInit(): void {
     this.form = new FormGroup({
       title: new FormControl(this.note.title, Validators.required),
-      description: new FormControl(this.note.description, Validators.required),
+      content: new FormControl(this.note.content, Validators.required),
     });
   }
   submitEdit() {
     console.log('asdas');
   }
-  deleteTodo() {}
+  deleteTodo() {
+    this.notesService.deleteNote(this.note.id);
+  }
 
   toggleEditMode() {
     this.editMode = !this.editMode;
@@ -37,7 +42,7 @@ export class NoteItemComponent implements OnInit {
   resetForm() {
     this.form.patchValue({
       title: this.note.title,
-      description: this.note.description,
+      content: this.note.content,
     });
   }
 }
