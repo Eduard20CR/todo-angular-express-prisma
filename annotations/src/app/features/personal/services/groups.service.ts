@@ -44,9 +44,9 @@ export class GroupsService {
     });
   }
   addGroup(group: Group) {
-    this.http.post(`${environment.API_URL}/api/groups`, group).subscribe({
+    this.http.post<ApiResponse<Group>>(`${environment.API_URL}/api/groups`, group).subscribe({
       next: (value) => {
-        this.groups.next([...this.groups.value, group]);
+        this.groups.next([...this.groups.value, value.data]);
       },
       error: (err) => {
         console.log(err);

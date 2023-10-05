@@ -51,7 +51,6 @@ export class NotesService {
       })
     );
   }
-
   addNote(newNote: Note) {
     const body: NoteDTO = {
       ...newNote,
@@ -69,7 +68,6 @@ export class NotesService {
       },
     });
   }
-
   deleteNote(id: number) {
     this.http.delete<ApiResponse<Note>>(`${environment.API_URL}/api/notes/${id}`).subscribe({
       next: (res) => {
@@ -79,6 +77,23 @@ export class NotesService {
       error: (err) => {
         console.log(err);
         this.popupMessageService.addMessage('Could not delete note');
+      },
+    });
+  }
+  editNote({ id, ...note }: Note) {
+    this.http.put<ApiResponse<Note>>(`${environment.API_URL}/api/notes/${id}`, { ...note }).subscribe({
+      next: (res) => {
+        const newNotes = this.notes.getValue().map((note) => {
+          if (note.id === id) {
+            return res.data;
+          }
+          return note;
+        });
+        this.notes.next(newNotes);
+      },
+      error: (err) => {
+        console.log(err);
+        this.popupMessageService.addMessage('Could not edit note');
       },
     });
   }

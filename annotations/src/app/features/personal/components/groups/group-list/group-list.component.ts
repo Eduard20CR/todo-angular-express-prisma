@@ -5,7 +5,6 @@ import { AddGroupComponent } from '../add-group/add-group.component';
 import { GroupItemComponent } from '../group-item/group-item.component';
 import { GroupsService } from '../../../services/groups.service';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { of } from 'rxjs';
 
 @Component({
   selector: '[app-group-list]',

@@ -48,9 +48,41 @@ input[type="password"] {
   @apply outline-1 outline-secondary;
 }
 
+// -------------
 // ANGULAR MATERIAL
 // -------------
 mat-progress-spinner circle,
 mat-spinner circle {
   @apply stroke-secondary;
+}
+
+// -------------
+// MARKDOWN
+// -------------
+
+markdown {
+  h1 {
+    @apply text-2xl font-bold;
+  }
+  h2 {
+    @apply text-xl font-bold;
+  }
+  h3 {
+    @apply text-lg font-bold;
+  }
+  h4 {
+    @apply text-base font-bold;
+  }
+
+  strong {
+    @apply font-bold text-secondary;
+  }
+
+  ul {
+    margin-left: 10px;
+  }
+
+  li {
+    list-style: disc;
+  }
 }

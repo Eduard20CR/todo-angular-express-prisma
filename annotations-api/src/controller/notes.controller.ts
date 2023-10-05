@@ -19,7 +19,18 @@ export const getNoteById: RequestHandler = async (req, res, next) => {
   try {
     const user = req.user as User;
     const groupId = Number(req.params.id);
-    const notes = await prisma.group.findUnique({ where: { id: groupId, userId: user.id }, include: { notes: true } });
+    const notes = await prisma.group.findUnique({
+      where: { id: groupId, userId: user.id },
+      include: {
+        notes: {
+          select: {
+            id: true,
+            title: true,
+            content: true,
+          },
+        },
+      },
+    });
 
     return res.status(200).json({
       message: "ok",
@@ -39,7 +50,14 @@ export const createNote: RequestHandler = async (req, res, next) => {
     if (!isIserGroup) {
       throw new CustomError("Group not found", 404);
     }
-    const newNote = await prisma.note.create({ data: { title, content, groupId: numberGroupId } });
+    const newNote = await prisma.note.create({
+      data: { title, content, groupId: numberGroupId },
+      select: {
+        id: true,
+        title: true,
+        content: true,
+      },
+    });
 
     return res.json({
       message: "ok",
@@ -52,7 +70,39 @@ export const createNote: RequestHandler = async (req, res, next) => {
   }
 };
 export const updateNote: RequestHandler = async (req, res, next) => {
-  return res.json({});
+  try {
+    const id = req.params.id;
+    const user = req.user as User;
+    const body = req.body;
+
+    console.log(body);
+
+    const updatedNote = await prisma.note.update({
+      where: {
+        id: Number(id),
+        group: {
+          userId: user.id,
+        },
+      },
+      data: {
+        ...body,
+      },
+      select: {
+        id: true,
+        title: true,
+        content: true,
+      },
+    });
+
+    return res.json({
+      message: "ok",
+      data: updatedNote,
+    });
+  } catch (error) {
+    console.log(error);
+
+    next(error);
+  }
 };
 export const deleteNote: RequestHandler = async (req, res, next) => {
   try {
@@ -65,6 +115,11 @@ export const deleteNote: RequestHandler = async (req, res, next) => {
         group: {
           userId: user.id,
         },
+      },
+      select: {
+        id: true,
+        title: true,
+        content: true,
       },
     });
 

@@ -30,8 +30,8 @@ export const createGroup: RequestHandler = async (req, res, next) => {
   try {
     const user = req.user as User;
     const { name } = req.body;
-    const group = await prisma.group.create({ data: { name, userId: user.id } });
-    res.json(group);
+    const group = await prisma.group.create({ data: { name, userId: user.id }, select: { id: true, name: true } });
+    res.json({ message: "created", data: group });
   } catch (error) {
     next(error);
   }

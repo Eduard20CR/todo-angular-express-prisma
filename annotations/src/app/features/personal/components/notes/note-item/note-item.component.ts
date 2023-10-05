@@ -6,11 +6,13 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { CheckIconComponent } from 'src/app/shared/components/icons/check-icon/check-icon.component';
 import { TrashIconComponent } from 'src/app/shared/components/icons/trash-icon/trash-icon.component';
 import { NotesService } from '../../../services/notes.service';
+import { PopupMessageService } from 'src/app/core/services/popup-message.service';
+import { MarkdownModule } from 'ngx-markdown';
 
 @Component({
   selector: 'app-note-item',
   standalone: true,
-  imports: [CommonModule, EditIconComponent, ReactiveFormsModule, CheckIconComponent, TrashIconComponent],
+  imports: [CommonModule, EditIconComponent, ReactiveFormsModule, CheckIconComponent, TrashIconComponent, MarkdownModule],
   templateUrl: './note-item.component.html',
   styleUrls: ['./note-item.component.scss'],
   host: { class: 'flex ' },
@@ -20,17 +22,37 @@ export class NoteItemComponent implements OnInit {
   form!: FormGroup;
   editMode = false;
 
-  constructor(private notesService: NotesService) {}
+  constructor(private notesService: NotesService, private popupMessageService: PopupMessageService) {}
 
   ngOnInit(): void {
     this.form = new FormGroup({
-      title: new FormControl(this.note.title, Validators.required),
-      content: new FormControl(this.note.content, Validators.required),
+      title: new FormControl(this.note.title, [Validators.required, Validators.minLength(1), Validators.maxLength(20)]),
+      content: new FormControl(this.note.content, [Validators.required, Validators.minLength(1), Validators.maxLength(1000)]),
     });
   }
   submitEdit() {
-    console.log('asdas');
+    if (this.form.invalid) return;
+
+    const editedNote: Note = {
+      ...this.note,
+    };
+    const title = this.form.get('title')?.value;
+    const content = this.form.get('content')?.value;
+
+    if (title !== this.note.title) {
+      editedNote.title = title;
+    }
+    if (content !== this.note.content) {
+      editedNote.content = content;
+    }
+
+    if (JSON.stringify(editedNote) !== JSON.stringify(this.note)) {
+      this.notesService.editNote(editedNote);
+    } else {
+      this.popupMessageService.addMessage('No changes made');
+    }
   }
+
   deleteTodo() {
     this.notesService.deleteNote(this.note.id);
   }

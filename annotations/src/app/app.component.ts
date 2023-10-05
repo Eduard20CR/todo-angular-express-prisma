@@ -5,6 +5,7 @@ import { NavigationComponent } from './core/components/navigation/navigation.com
 import { FooterComponent } from './core/components/footer/footer.component';
 import { UserService } from './core/services/user.service';
 import { MessageListComponent } from './core/components/popup-messages/message-list/message-list.component';
+import { MarkdownModule } from 'ngx-markdown';
 
 @Component({
   selector: 'app-root',
