@@ -65,7 +65,7 @@ export class TitleComponent implements OnInit, OnDestroy {
   }
   close() {
     this.editMode = false;
-    this.form.reset();
+    this.form.patchValue({ name: this.title });
   }
   focusInput() {
     setTimeout(() => {
