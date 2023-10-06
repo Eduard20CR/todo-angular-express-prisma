@@ -5,6 +5,8 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { ApiResponse } from 'src/app/core/models/user.model';
 import { PopupMessageService } from 'src/app/core/services/popup-message.service';
+import { NotesService } from './notes.service';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -28,7 +30,7 @@ export class GroupsService {
   groups$ = this.groups.asObservable();
   loading$ = this.loading.asObservable();
 
-  constructor(private http: HttpClient, private popupMessageService: PopupMessageService) {}
+  constructor(private http: HttpClient, private popupMessageService: PopupMessageService, private notesService: NotesService, private router: Router) {}
 
   fetchGroups() {
     this.loading.next(true);
@@ -54,22 +56,32 @@ export class GroupsService {
     });
   }
   deleteGroup(id: string) {
-    this.http.delete(`${environment.API_URL}/api/groups/${id}`).subscribe({
+    this.http.delete<ApiResponse<string>>(`${environment.API_URL}/api/groups/${id}`).subscribe({
       next: (value) => {
-        this.groups.next(this.groups.value.filter((group) => group.id !== id));
+        const filteredGroups = this.groups.value.filter((group) => group.id != id);
+        this.groups.next(filteredGroups);
+        this.router.navigate(['/personal']);
       },
       error: (err) => {
         console.log(err);
       },
     });
   }
-  updateGroup(group: Group) {
-    this.groups.next(
-      this.groups.value.map((g) => {
-        if (g.id === group.id) return group;
-        return g;
-      })
-    );
+  updateGroup({ name, id }: Group) {
+    this.http.put<ApiResponse<Group>>(`${environment.API_URL}/api/groups/${id}`, { name }).subscribe({
+      next: (value) => {
+        const newGroups = this.groups.value.map((group) => {
+          const isEditedGroup = group.id === value.data.id;
+          return isEditedGroup ? value.data : group;
+        });
+        this.notesService.emitName(value.data.name);
+        this.groups.next(newGroups);
+      },
+      error: (err) => {
+        console.log(err);
+        this.popupMessageService.addMessage('Could not edit group');
+      },
+    });
   }
   // getGroup(id: string) {
   //   return this.groups.value.find((group) => group.id === id);

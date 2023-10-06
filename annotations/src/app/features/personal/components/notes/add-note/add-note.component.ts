@@ -20,8 +20,8 @@ export class AddNoteComponent implements OnInit, OnDestroy {
   active = false;
 
   form = new FormGroup({
-    title: new FormControl('', Validators.required),
-    content: new FormControl('', Validators.required),
+    title: new FormControl('', [Validators.required, Validators.min(1), Validators.max(255)]),
+    content: new FormControl('', [Validators.required, Validators.min(1), Validators.max(255)]),
   });
 
   constructor(private notesService: NotesService) {}

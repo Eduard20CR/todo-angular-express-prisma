@@ -1,0 +1,44 @@
+<ng-template [ngIf]="editMode" [ngIfElse]="titleContainer">
+  <div class="flex gap-5 sm:gap-10">
+    <form class="w-full" [formGroup]="form" (ngSubmit)="submit()" (keydown.escape)="toggleAddMode()">
+      <input class="bg-transparent border-b border-white text-white py-1 px-3 w-full block" type="text" #inputEdit formControlName="name" />
+    </form>
+    <div class="flex gap-2 sm:gap-5">
+      <button
+        class="inline-flex text-gray hover:bg-tertiary hover:text-white rounded p-1 transition-colors w-10 h-10 items-center justify-center"
+        (click)="toggleAddMode()"
+        title="Cancel"
+      >
+        <i app-plus-icon></i>
+      </button>
+      <button
+        class="inline-flex text-gray hover:bg-secondary hover:text-black rounded p-1 transition-colors w-10 h-10 items-center justify-center"
+        (click)="submit()"
+        title="Save"
+      >
+        <i app-check-icon></i>
+      </button>
+    </div>
+  </div>
+</ng-template>
+<ng-template #titleContainer>
+  <div class="flex gap-10">
+    <h1 class="text-2xl sm:text-4xl text-gray uppercase font-bold">{{ title }}</h1>
+    <div class="flex flex-col sm:flex-row ml-auto sm:ml-0 gap-3">
+      <button
+        class="ml-auto inline-flex text-gray hover:bg-secondary hover:text-black rounded p-1 transition-colors w-10 h-10 items-center justify-center"
+        (click)="toggleAddMode()"
+        title="Edit title"
+      >
+        <i app-edit-icon></i>
+      </button>
+      <button
+        class="inline-flex text-gray hover:bg-tertiary hover:text-white rounded p-1 transition-colors w-10 h-10 items-center justify-center"
+        (click)="deleteGroup()"
+        title="Delete group"
+      >
+        <i app-trash-icon></i>
+      </button>
+    </div>
+  </div>
+</ng-template>

@@ -8,7 +8,7 @@
 [X] Toggle note form
 [X] Get Notes
 [X] Add note
-[] Edit Note
-[] Delete Note
+[X] Edit Note
+[X] Delete Note
 
 [] Componente title

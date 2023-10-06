@@ -44,7 +44,7 @@ model Note {
   updatedAt DateTime @updatedAt
   title     String
   content   String
-  group     Group    @relation(fields: [groupId], references: [id])
+  group     Group    @relation(fields: [groupId], references: [id], onDelete: Cascade)
   groupId   Int
 }
 
@@ -54,6 +54,6 @@ model Todo {
   updatedAt   DateTime @updatedAt
   description String
   done        Boolean  @default(false)
-  group       Group    @relation(fields: [groupId], references: [id])
+  group       Group    @relation(fields: [groupId], references: [id], onDelete: Cascade)
   groupId     Int
 }

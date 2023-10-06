@@ -46,6 +46,9 @@ input[type="password"] {
 
 * {
   @apply outline-1 outline-secondary;
+  &.ng-invalid.ng-dirty {
+    @apply outline-tertiary;
+  }
 }
 
 // -------------

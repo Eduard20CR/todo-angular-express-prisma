@@ -32,6 +32,10 @@ export const getNoteById: RequestHandler = async (req, res, next) => {
       },
     });
 
+    if (!notes) {
+      throw new CustomError("Group not found", 404);
+    }
+
     return res.status(200).json({
       message: "ok",
       data: notes,
@@ -74,8 +78,6 @@ export const updateNote: RequestHandler = async (req, res, next) => {
     const id = req.params.id;
     const user = req.user as User;
     const body = req.body;
-
-    console.log(body);
 
     const updatedNote = await prisma.note.update({
       where: {

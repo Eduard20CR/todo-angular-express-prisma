@@ -1,7 +1,6 @@
 import { RequestHandler } from "express";
 import prisma from "../db/prisma";
-import { Group, User } from "@prisma/client";
-import { filterAllowedFields } from "../util/allowedFieldsToUpdate";
+import { User } from "@prisma/client";
 
 export const getGroups: RequestHandler = async (req, res, next) => {
   try {
@@ -40,11 +39,11 @@ export const updateGroup: RequestHandler = async (req, res, next) => {
   try {
     const user = req.user as User;
     const id = Number(req.params.id);
-    const fields = filterAllowedFields<Group>(req.body, ["name"]);
+    const { name } = req.body;
 
-    const updatedTodo = await prisma.group.update({ where: { id, userId: user.id }, data: fields });
+    const updatedTodo = await prisma.group.update({ where: { id, userId: user.id }, data: { name } });
 
-    return res.json(updatedTodo);
+    return res.json({ message: "updated", data: updatedTodo });
   } catch (error) {
     next(error);
   }
@@ -56,8 +55,10 @@ export const deleteGroup: RequestHandler = async (req, res, next) => {
 
     await prisma.group.delete({ where: { id, userId: user.id } });
 
-    return res.json({ message: "Group deleted" });
+    return res.json({ message: "Group deleted", data: id });
   } catch (error) {
+    console.log(error);
+
     return next(error);
   }
 };

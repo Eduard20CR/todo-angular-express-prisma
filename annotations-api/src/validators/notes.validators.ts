@@ -3,7 +3,7 @@ import { validateFunction } from "./validate.function";
 
 const idParam = param("id").isInt().withMessage("Id must be an integer");
 
-const titleBody = body("title").isString().isLength({ min: 1, max: 20 });
+const titleBody = body("title").isString().isLength({ min: 1, max: 255 });
 const contentBody = body("content").isString().isLength({ min: 1, max: 1000 });
 const titleBodyNotRequired = titleBody.optional();
 const contentBodyNotRequired = contentBody.optional();

@@ -30,6 +30,9 @@ export class NotesService {
   setGroupId(id: string) {
     this.groupId = id;
   }
+  getGroupId() {
+    return this.groupId;
+  }
 
   fetchNotes(groupsId: string) {
     return this.http.get<ApiResponse<NoteGroup>>(`${environment.API_URL}/api/notes/${groupsId}`).pipe(
