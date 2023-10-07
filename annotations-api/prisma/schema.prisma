@@ -53,6 +53,7 @@ model Todo {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   description String
+  order       Int
   done        Boolean  @default(false)
   group       Group    @relation(fields: [groupId], references: [id], onDelete: Cascade)
   groupId     Int

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, ElementRef, HostListener, Input, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Note } from '../../../models/note.model';
 import { EditIconComponent } from 'src/app/shared/components/icons/edit-icon/edit-icon.component';
@@ -18,6 +18,7 @@ import { MarkdownModule } from 'ngx-markdown';
   host: { class: 'flex ' },
 })
 export class NoteItemComponent implements OnInit {
+  @ViewChild('inputEditNote', { static: false }) input!: ElementRef<HTMLInputElement>;
   @Input({ required: true }) note: Note = { id: 0, title: '', content: '' };
   form!: FormGroup;
   editMode = false;
@@ -58,13 +59,34 @@ export class NoteItemComponent implements OnInit {
   }
 
   toggleEditMode() {
-    this.editMode = !this.editMode;
+    if (this.editMode) this.close();
+    else this.open();
+  }
+
+  open() {
+    this.editMode = true;
+    this.focusInput();
+  }
+
+  close() {
+    this.editMode = false;
     this.resetForm();
   }
+
   resetForm() {
     this.form.patchValue({
       title: this.note.title,
       content: this.note.content,
     });
+  }
+
+  focusInput() {
+    setTimeout(() => {
+      if (this.input) this.input.nativeElement.focus();
+    });
+  }
+
+  @HostListener('document:keydown.escape') closeOnEscape() {
+    this.close();
   }
 }

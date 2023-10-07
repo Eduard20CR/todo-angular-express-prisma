@@ -8,7 +8,7 @@
     <button class="min-w-[2.25rem] w-9 h-9 block p-1 hover:bg-tertiary hover:text-white rounded transition-colors" title="Cancel" (click)="toggleAddMode()">
       <i class="rotate-45 inline-block" app-plus-icon></i>
     </button>
-    <form class="w-full mr-[7rem] sm:mr-0" [formGroup]="form" (ngSubmit)="submit()" (keydown.escape)="toggleAddMode()">
+    <form class="w-full mr-[7rem] sm:mr-0" [formGroup]="form" (ngSubmit)="submit()">
       <input class="bg-transparent border-b border-white text-white py-1 px-3 w-full" type="text" #inputNewTodo formControlName="name" />
     </form>
   </div>

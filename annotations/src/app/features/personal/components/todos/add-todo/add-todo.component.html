@@ -1,14 +1,22 @@
 <ng-container *ngIf="!addMode">
-  <button class="min-w-[2.25rem] w-9 h-9 block p-1 hover:bg-secondary hover:text-black rounded transition-colors" title="Add" (click)="toggleAddMode()">
-    <i app-plus-icon></i>
-  </button>
-  <span>Add</span>
+  <div class="text-gray bg-black flex items-center gap-8 py-4 px-8 group" (click)="toggleAddMode()">
+    <button
+      class="min-w-[2.25rem] w-9 h-9 block p-1 hover:bg-secondary hover:text-black rounded transition-colors group-hover:bg-secondary group-hover:text-black"
+      title="Add"
+      (click)="toggleAddMode()"
+    >
+      <i app-plus-icon></i>
+    </button>
+    <span>Add</span>
+  </div>
 </ng-container>
 <ng-container *ngIf="addMode">
-  <button class="min-w-[2.25rem] w-9 h-9 block p-1 hover:bg-primary hover:text-white rounded transition-colors" title="Cancel" (click)="toggleAddMode()">
-    <i class="rotate-45 inline-block" app-plus-icon></i>
-  </button>
-  <form class="w-full" [formGroup]="form" (ngSubmit)="submit()">
-    <input class="bg-transparent border-b border-white text-white py-1 px-3 w-full" type="text" #inputNewTodo formControlName="description" />
-  </form>
+  <div class="text-gray bg-black flex items-center gap-8 py-4 px-8">
+    <button class="min-w-[2.25rem] w-9 h-9 block p-1 hover:bg-primary hover:text-white rounded transition-colors" title="Cancel" (click)="toggleAddMode()">
+      <i class="rotate-45 inline-block" app-plus-icon></i>
+    </button>
+    <form class="w-full" [formGroup]="form" (ngSubmit)="submit()">
+      <input class="bg-transparent border-b border-white text-white py-1 px-3 w-full" type="text" #inputNewTodo formControlName="description" />
+    </form>
+  </div>
 </ng-container>

@@ -4,6 +4,7 @@ import { TodoItemComponent } from '../todo-item/todo-item.component';
 import { CdkDragDrop, CdkDropList, CdkDrag, moveItemInArray } from '@angular/cdk/drag-drop';
 import { AddTodoComponent } from '../add-todo/add-todo.component';
 import { Todo } from '../../../models/todo.model';
+import { TodosService } from '../../../services/todos.service';
 
 @Component({
   selector: 'app-todo-group',
@@ -13,9 +14,13 @@ import { Todo } from '../../../models/todo.model';
   styleUrls: ['./todo-group.component.scss'],
 })
 export class TodoGroupComponent {
-  todos: Todo[] = [{ completed: false, description: 'Get groceries', id: 1, order: 0 }];
+  todos$ = this.todosService.todos$;
+
+  constructor(private todosService: TodosService) {}
 
   drop(event: CdkDragDrop<string[]>) {
-    moveItemInArray(this.todos, event.previousIndex, event.currentIndex);
+    const newArr = this.todosService.getTodos();
+    moveItemInArray(newArr, event.previousIndex, event.currentIndex);
+    this.todosService.changeOrder(newArr);
   }
 }

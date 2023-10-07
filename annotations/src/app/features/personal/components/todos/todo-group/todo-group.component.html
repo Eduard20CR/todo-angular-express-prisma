@@ -1,4 +1,4 @@
 <ul cdkDropList class="todoGroup grid border border-gray rounded" (cdkDropListDropped)="drop($event)">
   <li class="todoListItem border-gray" app-add-todo></li>
-  <li app-todo-item class="todoListItem border-gray cursor-grab" *ngFor="let todo of todos" cdkDrag [todo]="todo"></li>
+  <li app-todo-item class="todoListItem border-gray cursor-grab list-none" *ngFor="let todo of todos$ | async" cdkDrag [todo]="todo"></li>
 </ul>

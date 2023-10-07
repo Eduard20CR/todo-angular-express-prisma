@@ -1,15 +1,49 @@
-import { Component, Input } from '@angular/core';
+import { Component, ElementRef, HostListener, Input, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Todo } from '../../../models/todo.model';
+import { TrashIconComponent } from 'src/app/shared/components/icons/trash-icon/trash-icon.component';
+import { PlusIconComponent } from 'src/app/shared/components/icons/plus-icon/plus-icon.component';
+import { EditIconComponent } from 'src/app/shared/components/icons/edit-icon/edit-icon.component';
+import { CheckIconComponent } from 'src/app/shared/components/icons/check-icon/check-icon.component';
+import { MenuIconComponent } from 'src/app/shared/components/icons/menu-icon/menu-icon.component';
+import { TodosService } from '../../../services/todos.service';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
   selector: '[app-todo-item]',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, TrashIconComponent, PlusIconComponent, EditIconComponent, CheckIconComponent, MenuIconComponent, ReactiveFormsModule],
   templateUrl: './todo-item.component.html',
   styleUrls: ['./todo-item.component.scss'],
-  host: { class: 'bg-black flex items-center gap-10 py-4 px-10' },
 })
 export class TodoItemComponent {
+  @ViewChild('subMenuElement', { static: false }) subMenuElement!: ElementRef<HTMLDivElement>;
   @Input() todo!: Todo;
+  editMode = false;
+  submenuOpen = false;
+  form = new FormGroup({
+    description: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]),
+  });
+
+  constructor(private todosService: TodosService) {}
+
+  toggleCompleted() {
+    console.log('asdasd');
+  }
+
+  deleteTodo() {
+    // this.todosService.deleteTodo();
+  }
+  submit() {
+    // this.todosService.deleteTodo();
+  }
+
+  toggleMenu() {
+    this.submenuOpen = !this.submenuOpen;
+  }
+
+  @HostListener('document:keydown.escape') closeOnEscape() {
+    this.submenuOpen = false;
+    this.editMode = false;
+  }
 }

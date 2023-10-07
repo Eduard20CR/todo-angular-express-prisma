@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild, inject } from '@angular/core';
+import { Component, ElementRef, HostListener, ViewChild, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { PlusIconComponent } from 'src/app/shared/components/icons/plus-icon/plus-icon.component';
@@ -43,5 +43,9 @@ export class AddGroupComponent {
     setTimeout(() => {
       if (this.input) this.input.nativeElement.focus();
     });
+  }
+
+  @HostListener('document:keydown.escape') closeOnEscape() {
+    this.close();
   }
 }

@@ -8,7 +8,7 @@
       id="title"
       formControlName="title"
       placeholder="Title"
-      (keydown.escape)="toggleMode()"
+      #inputNewNote
     />
     <textarea
       class="bg-transparent border-b border-white text-white py-3 px-3"
@@ -17,7 +17,6 @@
       rows="10"
       formControlName="content"
       placeholder="Content"
-      (keydown.escape)="toggleMode()"
     ></textarea>
     <div class="flex justify-between">
       <button

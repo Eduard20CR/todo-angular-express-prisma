@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostListener, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NotesService } from '../../../services/notes.service';
@@ -71,5 +71,9 @@ export class TitleComponent implements OnInit, OnDestroy {
     setTimeout(() => {
       if (this.input) this.input.nativeElement.focus();
     });
+  }
+
+  @HostListener('document:keydown.escape') closeOnEscape() {
+    this.close();
   }
 }

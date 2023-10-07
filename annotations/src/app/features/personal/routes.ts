@@ -1,5 +1,6 @@
 import { Route } from '@angular/router';
-import { notesResolver } from 'src/app/core/resolver/notes.resolver';
+import { notesResolver } from 'src/app/core/resolvers/notes.resolver';
+import { todosResolver } from 'src/app/core/resolvers/todos.resolver';
 
 export default [
   {
@@ -20,6 +21,9 @@ export default [
       {
         path: 'todos/:id',
         loadComponent: () => import('./pages/todo-list/todo-list.component').then((m) => m.TodoListComponent),
+        resolve: {
+          group: todosResolver,
+        },
       },
     ],
   },

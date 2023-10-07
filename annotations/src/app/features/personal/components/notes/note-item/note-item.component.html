@@ -3,11 +3,10 @@
 >
   <div *ngIf="!editMode" class="mb-5">
     <h2 class="text-3xl font-bold mb-3">{{ note.title }}</h2>
-    <!-- <p>{{ note.content }}</p> -->
     <markdown ngPreserveWhitespaces="true">{{ note.content }} </markdown>
   </div>
   <form *ngIf="editMode" [formGroup]="form" class="mb-5 grid gap-5" (ngSubmit)="submitEdit()">
-    <input class="bg-transparent border-b border-white text-white py-3 px-3" type="text" name="title" id="title" formControlName="title" />
+    <input class="bg-transparent border-b border-white text-white py-3 px-3" type="text" name="title" id="title" formControlName="title" #inputEditNote />
     <textarea class="bg-transparent border-b border-white text-white py-3 px-3" name="content" id="content" rows="10" formControlName="content"></textarea>
   </form>
   <div class="mt-auto flex gap-2">

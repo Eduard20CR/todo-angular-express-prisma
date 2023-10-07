@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PlusIconComponent } from 'src/app/shared/components/icons/plus-icon/plus-icon.component';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -16,6 +16,7 @@ import { Subscription } from 'rxjs';
   host: { class: 'flex ' },
 })
 export class AddNoteComponent implements OnInit, OnDestroy {
+  @ViewChild('inputNewNote', { static: false }) input!: ElementRef<HTMLInputElement>;
   resetForm$!: Subscription;
   active = false;
 
@@ -36,12 +37,28 @@ export class AddNoteComponent implements OnInit, OnDestroy {
   }
 
   toggleMode() {
-    this.active = !this.active;
+    if (this.active) this.close();
+    else this.open();
+  }
+
+  open() {
+    this.active = true;
+    this.focusInput();
+  }
+
+  close() {
+    this.active = false;
     this.resetForm();
   }
 
   resetForm() {
     this.form.reset();
+  }
+
+  focusInput() {
+    setTimeout(() => {
+      if (this.input) this.input.nativeElement.focus();
+    });
   }
 
   submit() {
@@ -52,5 +69,9 @@ export class AddNoteComponent implements OnInit, OnDestroy {
     };
 
     this.notesService.addNote(newNote);
+  }
+
+  @HostListener('document:keydown.escape') closeOnEscape() {
+    this.close();
   }
 }
