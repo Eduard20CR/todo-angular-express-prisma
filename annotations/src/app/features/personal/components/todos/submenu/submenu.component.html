@@ -1,0 +1,14 @@
+<button
+  class="w-9 h-9 block p-1 hover:bg-secondary hover:text-black rounded transition-colors"
+  [ngClass]="{
+    'bg-secondary text-black': submenuOpen
+  }"
+  title="Cancel"
+  (click)="onToggleMenu()"
+>
+  <i class="inline-block" app-menu-icon></i>
+</button>
+<ul class="absolute right-0 text-end border rounded bg-black text-white z-10 top-full cursor-pointer" *ngIf="submenuOpen">
+  <li class="px-3 py-1 hover:bg-gray transition-colors" (click)="onEdit()">Edit</li>
+  <li class="px-3 py-1 hover:bg-gray transition-colors" (click)="onDelete()">Delete</li>
+</ul>

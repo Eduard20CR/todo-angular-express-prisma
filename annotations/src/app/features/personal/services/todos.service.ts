@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Todo, TodoDTO, TodoGroup } from '../models/todo.model';
-import { BehaviorSubject, catchError, map, of } from 'rxjs';
+import { BehaviorSubject, catchError, concatMap, map, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { ApiResponse } from 'src/app/core/models/user.model';
 import { PopupMessageService } from 'src/app/core/services/popup-message.service';
@@ -66,11 +66,23 @@ export class TodosService {
         this.todos.next([...this.todos.getValue(), res.data]);
       },
       error: (err) => {
-        this.popupMessageService.addMessage("Couldn't add new todo");
+        this.popupMessageService.addMessage("Couldn't delete new todo");
       },
     });
   }
   changeOrder(todos: Todo[]) {
     this.todos.next(todos);
+  }
+  deleteTodo(todo: Todo) {
+    this.http.delete<ApiResponse<Todo[]>>(`http://localhost:3000/api/todos/${todo.id}/group/${this.getGroupId()}`).subscribe({
+      next: (res) => {
+        this.todos.next([...res.data]);
+      },
+      error: (err) => {
+        console.log('err');
+
+        this.popupMessageService.addMessage("Couldn't add new todo");
+      },
+    });
   }
 }

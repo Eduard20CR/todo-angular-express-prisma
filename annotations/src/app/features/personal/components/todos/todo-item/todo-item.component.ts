@@ -7,12 +7,13 @@ import { EditIconComponent } from 'src/app/shared/components/icons/edit-icon/edi
 import { CheckIconComponent } from 'src/app/shared/components/icons/check-icon/check-icon.component';
 import { MenuIconComponent } from 'src/app/shared/components/icons/menu-icon/menu-icon.component';
 import { TodosService } from '../../../services/todos.service';
-import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { SubmenuComponent } from '../submenu/submenu.component';
 
 @Component({
   selector: '[app-todo-item]',
   standalone: true,
-  imports: [CommonModule, TrashIconComponent, PlusIconComponent, EditIconComponent, CheckIconComponent, MenuIconComponent, ReactiveFormsModule],
+  imports: [CommonModule, TrashIconComponent, PlusIconComponent, EditIconComponent, CheckIconComponent, ReactiveFormsModule, SubmenuComponent],
   templateUrl: './todo-item.component.html',
   styleUrls: ['./todo-item.component.scss'],
 })
@@ -32,14 +33,14 @@ export class TodoItemComponent {
   }
 
   deleteTodo() {
-    // this.todosService.deleteTodo();
+    this.todosService.deleteTodo(this.todo);
   }
   submit() {
     // this.todosService.deleteTodo();
   }
 
-  toggleMenu() {
-    this.submenuOpen = !this.submenuOpen;
+  toggleEdit() {
+    this.editMode = !this.editMode;
   }
 
   @HostListener('document:keydown.escape') closeOnEscape() {

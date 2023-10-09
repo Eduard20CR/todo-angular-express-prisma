@@ -1,32 +1,17 @@
 <ng-template [ngIf]="editMode" [ngIfElse]="todoPresentation">
   <div class="bg-black flex items-center gap-10 py-4 px-4 sm:px-10">
-    <button class="min-w-[2.25rem] w-9 h-9 block p-1 hover:bg-primary hover:text-white rounded transition-colors" title="Cancel">
-      <i class="rotate-45 inline-block" app-plus-icon></i>
-    </button>
     <form class="w-full" [formGroup]="form" (ngSubmit)="submit()">
       <input class="bg-transparent border-b border-white text-white py-1 px-3 w-full" type="text" #inputNewTodo formControlName="description" />
     </form>
+    <button class="min-w-[2.25rem] w-9 h-9 block p-1 hover:bg-primary hover:text-white rounded transition-colors" title="Cancel" (click)="toggleEdit()">
+      <i class="rotate-45 inline-block" app-plus-icon></i>
+    </button>
   </div>
 </ng-template>
 <ng-template #todoPresentation>
   <div class="gridTodoCustom bg-black grid items-center justify-between gap-5 sm:gap-7 py-4 px-4 sm:px-10">
     <span class="inline-block w-5 h-5 bg-primary rounded-full cursor-pointer" (click)="toggleCompleted()"></span>
     <span class="mr-auto">{{ todo.description }}</span>
-    <div class="flex gap-2 relative" #subMenuElement [attr.data-submenu-group]="todo.id">
-      <button
-        class="w-9 h-9 block p-1 hover:bg-secondary hover:text-black rounded transition-colors"
-        [ngClass]="{
-          'bg-secondary text-black': submenuOpen
-        }"
-        title="Cancel"
-        (click)="toggleMenu()"
-      >
-        <i class="inline-block" app-menu-icon></i>
-      </button>
-      <ul class="absolute right-0 text-end border rounded bg-black text-white z-10 top-full cursor-pointer" *ngIf="submenuOpen">
-        <li class="px-3 py-1 hover:bg-gray transition-colors">Edit</li>
-        <li class="px-3 py-1 hover:bg-gray transition-colors">Delete</li>
-      </ul>
-    </div>
+    <div class="flex gap-2 relative" #subMenuElement [attr.data-submenu-group]="todo.id" app-submenu (edit)="toggleEdit()" (delete)="deleteTodo()"></div>
   </div>
 </ng-template>
