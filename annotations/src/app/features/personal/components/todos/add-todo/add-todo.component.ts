@@ -43,7 +43,7 @@ export class AddTodoComponent implements OnInit, OnDestroy {
     const groupId = this.todosService.getGroupId();
 
     const newTodo: TodoDTO = {
-      completed: false,
+      done: false,
       id: 0,
       description: this.form.get('description')?.value as string,
       order: lastTodo,

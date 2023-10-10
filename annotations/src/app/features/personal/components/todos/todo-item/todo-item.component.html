@@ -10,8 +10,15 @@
 </ng-template>
 <ng-template #todoPresentation>
   <div class="gridTodoCustom bg-black grid items-center justify-between gap-5 sm:gap-7 py-4 px-4 sm:px-10">
-    <span class="inline-block w-5 h-5 bg-primary rounded-full cursor-pointer" (click)="toggleCompleted()"></span>
-    <span class="mr-auto">{{ todo.description }}</span>
+    <span
+      class="inline-block w-5 h-5 bg-primary rounded-full cursor-pointer"
+      [ngClass]="{
+        'bg-white': todo.done,
+        'bg-primary': !todo.done
+      }"
+      (click)="toggleCompleted()"
+    ></span>
+    <span class="mr-auto break-all">{{ todo.description }}</span>
     <div class="flex gap-2 relative" #subMenuElement [attr.data-submenu-group]="todo.id" app-submenu (edit)="toggleEdit()" (delete)="deleteTodo()"></div>
   </div>
 </ng-template>

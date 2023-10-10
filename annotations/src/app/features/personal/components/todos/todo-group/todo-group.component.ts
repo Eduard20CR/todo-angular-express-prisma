@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { TodoItemComponent } from '../todo-item/todo-item.component';
 import { CdkDragDrop, CdkDropList, CdkDrag, moveItemInArray } from '@angular/cdk/drag-drop';
 import { AddTodoComponent } from '../add-todo/add-todo.component';
-import { Todo } from '../../../models/todo.model';
 import { TodosService } from '../../../services/todos.service';
 
 @Component({
@@ -19,8 +18,9 @@ export class TodoGroupComponent {
   constructor(private todosService: TodosService) {}
 
   drop(event: CdkDragDrop<string[]>) {
-    const newArr = this.todosService.getTodos();
+    const newArr = this.todosService.getTodos().slice();
+    const groupId = this.todosService.getGroupId();
     moveItemInArray(newArr, event.previousIndex, event.currentIndex);
-    this.todosService.changeOrder(newArr);
+    this.todosService.changeOrder({ todos: newArr, groupId });
   }
 }

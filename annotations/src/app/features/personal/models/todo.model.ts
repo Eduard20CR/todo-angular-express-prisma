@@ -1,7 +1,7 @@
 export interface Todo {
   id: number;
   description: string;
-  completed: boolean;
+  done: boolean;
   order: number;
 }
 
@@ -13,4 +13,8 @@ export interface TodoGroup {
 
 export interface TodoDTO extends Todo {
   groupId: string;
+}
+export interface TodoGroupArr {
+  groupId: string;
+  todos: Todo[];
 }

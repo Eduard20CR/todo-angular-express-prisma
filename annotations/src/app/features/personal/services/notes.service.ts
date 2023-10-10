@@ -12,10 +12,8 @@ import { Router } from '@angular/router';
 })
 export class NotesService {
   private notes = new BehaviorSubject<Note[]>([]);
-  private name = new BehaviorSubject<string>('Notes');
   private resetForm = new Subject<void>();
   notes$ = this.notes.asObservable();
-  name$ = this.name.asObservable();
   resetForm$ = this.resetForm.asObservable();
   private groupId = '';
 
@@ -24,9 +22,7 @@ export class NotesService {
   emitNotes(notes: Note[]) {
     this.notes.next(notes);
   }
-  emitName(name: string) {
-    this.name.next(name);
-  }
+
   setGroupId(id: string) {
     this.groupId = id;
   }

@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Todo, TodoDTO, TodoGroup } from '../models/todo.model';
-import { BehaviorSubject, catchError, concatMap, map, of } from 'rxjs';
+import { Todo, TodoDTO, TodoGroup, TodoGroupArr } from '../models/todo.model';
+import { BehaviorSubject, catchError, map, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { ApiResponse } from 'src/app/core/models/user.model';
 import { PopupMessageService } from 'src/app/core/services/popup-message.service';
 import { environment } from 'src/environments/environment';
-import { NoteGroup } from '../models/note.model';
 import { Router } from '@angular/router';
 
 @Injectable({
@@ -14,22 +13,16 @@ import { Router } from '@angular/router';
 export class TodosService {
   private loading = new BehaviorSubject<boolean>(false);
   private todos = new BehaviorSubject<Todo[]>([]);
-  private name = new BehaviorSubject<string>('Notes');
   todos$ = this.todos.asObservable();
-  name$ = this.name.asObservable();
   loading$ = this.loading.asObservable();
   private groupId = '';
 
   constructor(private http: HttpClient, private popupMessageService: PopupMessageService, private router: Router) {}
 
   emitTodos(todos: Todo[]) {
-    console.log(todos);
-
     this.todos.next(todos);
   }
-  emitName(name: string) {
-    this.name.next(name);
-  }
+
   setGroupId(id: string) {
     this.groupId = id;
   }
@@ -70,8 +63,31 @@ export class TodosService {
       },
     });
   }
-  changeOrder(todos: Todo[]) {
-    this.todos.next(todos);
+  editTodo(editedTodo: Todo) {
+    this.http.put<ApiResponse<Todo>>(`http://localhost:3000/api/todos/${editedTodo.id}`, editedTodo).subscribe({
+      next: (res) => {
+        console.log(res);
+        const todos = this.todos.getValue();
+        const editedTodoIndex = todos.findIndex((todo) => todo.id === editedTodo.id);
+        todos[editedTodoIndex] = editedTodo;
+        this.todos.next([...todos]);
+      },
+      error: (err) => {
+        console.log(err);
+        this.popupMessageService.addMessage("Couldn't edit new todo");
+      },
+    });
+  }
+  changeOrder(todoGroups: TodoGroupArr) {
+    this.http.put<ApiResponse<Todo[]>>(`http://localhost:3000/api/todos/order`, todoGroups).subscribe({
+      next: (res) => {
+        this.todos.next([...todoGroups.todos]);
+      },
+      error: (err) => {
+        console.log(err);
+        this.popupMessageService.addMessage("Couldn't change order");
+      },
+    });
   }
   deleteTodo(todo: Todo) {
     this.http.delete<ApiResponse<Todo[]>>(`http://localhost:3000/api/todos/${todo.id}/group/${this.getGroupId()}`).subscribe({
@@ -82,6 +98,20 @@ export class TodosService {
         console.log('err');
 
         this.popupMessageService.addMessage("Couldn't add new todo");
+      },
+    });
+  }
+  toggleCompleted(todo: Todo, state: boolean) {
+    this.http.put<ApiResponse<Todo>>(`http://localhost:3000/api/todos/toggle/${todo.id}`, { state }).subscribe({
+      next: (res) => {
+        const todos = this.todos.getValue();
+        const editedTodoIndex = todos.findIndex((todo) => todo.id === res.data.id);
+        todos[editedTodoIndex].done = res.data.done;
+        this.todos.next([...todos]);
+      },
+      error: (err) => {
+        console.log(err);
+        this.popupMessageService.addMessage("Couldn't toggle completed");
       },
     });
   }

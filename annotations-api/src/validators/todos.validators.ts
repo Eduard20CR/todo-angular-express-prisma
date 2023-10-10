@@ -3,6 +3,7 @@ import { validateFunction } from "./validate.function";
 
 const idParam = param("id").isInt().withMessage("Id must be an integer");
 const idGroupParam = param("groupId").isInt().withMessage("Id must be an integer");
+const toggleState = body("state").isBoolean().withMessage("State must be a boolean");
 
 const groupId = body("groupId").isString();
 const descriptionBody = body("description").isString().isLength({ min: 1, max: 255 });
@@ -12,6 +13,8 @@ const descriptionBodyRequired = descriptionBody.notEmpty();
 export const getTodosByGroupIdValidator = [idParam, validateFunction];
 
 export const createTodoValidator = [descriptionBodyRequired, groupId, validateFunction];
+
+export const toggleTodoValidator = [idParam, toggleState, validateFunction];
 
 export const updateTodoValidator = [idParam, descriptionBodyNotRequired, validateFunction];
 

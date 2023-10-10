@@ -9,6 +9,8 @@ import { TrashIconComponent } from 'src/app/shared/components/icons/trash-icon/t
 import { CheckIconComponent } from 'src/app/shared/components/icons/check-icon/check-icon.component';
 import { GroupsService } from '../../../services/groups.service';
 import { Group } from '../../../models/group.model';
+import { TodosService } from '../../../services/todos.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-title',
@@ -21,16 +23,19 @@ import { Group } from '../../../models/group.model';
 export class TitleComponent implements OnInit, OnDestroy {
   @ViewChild('inputEdit', { static: false }) input!: ElementRef<HTMLInputElement>;
   title$!: Subscription;
+
   title = 'Notes';
   editMode = false;
   form = new FormGroup({
     name: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]),
   });
 
-  constructor(private notesService: NotesService, private groupService: GroupsService) {}
+  constructor(private notesService: NotesService, private groupService: GroupsService, private todosService: TodosService, private router: Router) {}
 
   ngOnInit(): void {
-    this.title$ = this.notesService.name$.subscribe((name) => {
+    this.title$ = this.groupService.name$.subscribe((name) => {
+      if (!name) return;
+
       this.title = name;
       this.form.patchValue({ name });
     });
@@ -47,10 +52,14 @@ export class TitleComponent implements OnInit, OnDestroy {
   submit() {
     if (this.form.invalid) return;
 
+    const idGroup = this.router.url.includes('notes') ? this.notesService.getGroupId() : this.todosService.getGroupId();
+
     const groupEdited: Group = {
-      id: this.notesService.getGroupId(),
+      id: idGroup,
       name: this.form.value.name as string,
     };
+    console.log(groupEdited);
+
     this.groupService.updateGroup(groupEdited);
 
     this.close();

@@ -2,7 +2,7 @@
   class="border border-white shadow shadow-secondary p-5 rounded flex hover:shadow-md hover:shadow-secondary hover:-translate-y-1 flex-col transition-all w-full"
 >
   <div *ngIf="!editMode" class="mb-5">
-    <h2 class="text-3xl font-bold mb-3">{{ note.title }}</h2>
+    <h2 class="text-3xl font-bold mb-3 break-all">{{ note.title }}</h2>
     <markdown ngPreserveWhitespaces="true">{{ note.content }} </markdown>
   </div>
   <form *ngIf="editMode" [formGroup]="form" class="mb-5 grid gap-5" (ngSubmit)="submitEdit()">

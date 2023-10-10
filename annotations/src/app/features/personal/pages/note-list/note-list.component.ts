@@ -6,6 +6,7 @@ import { NoteGroupComponent } from '../../components/notes/note-group/note-group
 import { NotesService } from '../../services/notes.service';
 import { Subscription } from 'rxjs';
 import { TitleComponent } from '../../components/groups/title/title.component';
+import { GroupsService } from '../../services/groups.service';
 
 @Component({
   selector: 'app-note-list',
@@ -19,7 +20,7 @@ export class NoteListComponent implements OnInit, OnDestroy {
   dataSubcription!: Subscription;
   paramsSubcription!: Subscription;
 
-  constructor(private activatedRoute: ActivatedRoute, private notesService: NotesService, private router: Router) {}
+  constructor(private activatedRoute: ActivatedRoute, private notesService: NotesService, private groupService: GroupsService) {}
 
   ngOnInit(): void {
     this.paramsSubcription = this.activatedRoute.paramMap.subscribe((data) => {
@@ -27,7 +28,7 @@ export class NoteListComponent implements OnInit, OnDestroy {
     });
     this.dataSubcription = this.activatedRoute.data.subscribe((data) => {
       this.notesService.emitNotes(data['group'].notes);
-      this.notesService.emitName(data['group'].name);
+      this.groupService.emitName(data['group'].name);
     });
   }
   ngOnDestroy(): void {

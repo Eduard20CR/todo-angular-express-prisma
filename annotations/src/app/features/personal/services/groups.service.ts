@@ -12,26 +12,18 @@ import { Router } from '@angular/router';
   providedIn: 'root',
 })
 export class GroupsService {
-  private groups = new BehaviorSubject<Group[]>([
-    {
-      id: '1',
-      name: 'Group 1',
-    },
-    {
-      id: '2',
-      name: 'Group 2',
-    },
-    {
-      id: '3',
-      name: 'Group 3',
-    },
-  ]);
+  private groups = new BehaviorSubject<Group[]>([]);
+  private name = new BehaviorSubject<string>('');
   private loading = new BehaviorSubject<boolean>(false);
+  name$ = this.name.asObservable();
   groups$ = this.groups.asObservable();
   loading$ = this.loading.asObservable();
 
   constructor(private http: HttpClient, private popupMessageService: PopupMessageService, private notesService: NotesService, private router: Router) {}
 
+  emitName(name: string) {
+    this.name.next(name);
+  }
   fetchGroups() {
     this.loading.next(true);
     this.http.get<ApiResponse<Group[]>>(`${environment.API_URL}/api/groups`).subscribe({
@@ -74,7 +66,7 @@ export class GroupsService {
           const isEditedGroup = group.id === value.data.id;
           return isEditedGroup ? value.data : group;
         });
-        this.notesService.emitName(value.data.name);
+        this.emitName(value.data.name);
         this.groups.next(newGroups);
       },
       error: (err) => {

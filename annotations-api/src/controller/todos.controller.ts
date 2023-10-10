@@ -1,4 +1,4 @@
-import { User } from "@prisma/client";
+import { Todo, User } from "@prisma/client";
 import { RequestHandler } from "express";
 import prisma from "../db/prisma";
 import { CustomError } from "../util/errorUtil";
@@ -48,7 +48,25 @@ export const createTodo: RequestHandler = async (req, res, next) => {
   }
 };
 export const updateTodo: RequestHandler = async (req, res, next) => {
-  return res.json({});
+  try {
+    const user = req.user as User;
+    const { id } = req.params;
+    const { description } = req.body;
+
+    const editedTodo = await prisma.todo.update({
+      where: {
+        id: Number(id),
+        group: {
+          userId: Number(user.id),
+        },
+      },
+      data: { description },
+    });
+
+    return res.json({ message: "updated", data: editedTodo });
+  } catch (error) {
+    next(error);
+  }
 };
 export const deleteTodo: RequestHandler = async (req, res, next) => {
   try {
@@ -81,6 +99,41 @@ export const deleteTodo: RequestHandler = async (req, res, next) => {
   } catch (error) {
     console.log(error);
 
+    next(error);
+  }
+};
+export const changeOrder: RequestHandler = async (req, res, next) => {
+  try {
+    const user = req.user as User;
+    const { groupId, todos } = req.body;
+
+    const isUserGroup = await prisma.group.findUnique({ where: { id: Number(groupId), userId: Number(user.id) } });
+    if (!isUserGroup) throw new CustomError("Group not found", 404);
+
+    await prisma.$transaction([
+      ...todos.map((todo: Todo) =>
+        prisma.todo.update({
+          where: { id: todo.id },
+          data: { order: todo.order },
+        })
+      ),
+    ]);
+
+    return res.json({ message: "created", data: {} });
+  } catch (error) {
+    next(error);
+  }
+};
+export const toggleCompleted: RequestHandler = async (req, res, next) => {
+  try {
+    const user = req.user as User;
+    const { state } = req.body;
+    const { id } = req.params;
+
+    const todo = await prisma.todo.update({ where: { id: Number(id), group: { userId: user.id } }, data: { done: state } });
+
+    return res.json({ message: "created", data: todo });
+  } catch (error) {
     next(error);
   }
 };

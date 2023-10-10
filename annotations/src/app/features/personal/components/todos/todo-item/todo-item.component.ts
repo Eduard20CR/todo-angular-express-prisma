@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener, Input, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostListener, Input, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Todo } from '../../../models/todo.model';
 import { TrashIconComponent } from 'src/app/shared/components/icons/trash-icon/trash-icon.component';
@@ -17,7 +17,7 @@ import { SubmenuComponent } from '../submenu/submenu.component';
   templateUrl: './todo-item.component.html',
   styleUrls: ['./todo-item.component.scss'],
 })
-export class TodoItemComponent {
+export class TodoItemComponent implements OnInit {
   @ViewChild('subMenuElement', { static: false }) subMenuElement!: ElementRef<HTMLDivElement>;
   @Input() todo!: Todo;
   editMode = false;
@@ -27,16 +27,25 @@ export class TodoItemComponent {
   });
 
   constructor(private todosService: TodosService) {}
+  ngOnInit(): void {
+    this.form.get('description')?.setValue(this.todo.description);
+  }
 
   toggleCompleted() {
     console.log('asdasd');
+    this.todosService.toggleCompleted(this.todo, !this.todo.done);
   }
 
   deleteTodo() {
     this.todosService.deleteTodo(this.todo);
   }
   submit() {
-    // this.todosService.deleteTodo();
+    const editedTodo: Todo = {
+      ...this.todo,
+      description: this.form.get('description')?.value as string,
+    };
+    this.todosService.editTodo(editedTodo);
+    this.editMode = false;
   }
 
   toggleEdit() {
