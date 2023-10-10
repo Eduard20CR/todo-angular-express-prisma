@@ -2,8 +2,6 @@ import { RequestHandler } from "express";
 import { validationResult } from "express-validator";
 
 export const validateFunction: RequestHandler = async (req, res, next) => {
-  console.log(req.body);
-
   const result = validationResult(req);
 
   if (result.isEmpty()) {
